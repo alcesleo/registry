@@ -19,13 +19,14 @@ class MainMenuView extends CommandLineView
         //code...
     }
 
-    public function readMenu()
+    public function readMenuOption()
     {
         while (true) {
             $this->showMenu();
             try {
                 return $this->readOption('Select option: ');
             } catch (Exception $e) {
+                print "That is not a valid option\n";
                 continue;
             }
         }
@@ -51,6 +52,7 @@ class MainMenuView extends CommandLineView
      */
     private function showMenu()
     {
+        print "\nPlease select menu option:\n";
         foreach (self::$options as $command => $description) {
             print "$command : $description\n";
         }
