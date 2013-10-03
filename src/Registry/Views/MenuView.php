@@ -14,20 +14,25 @@ class MenuView extends CommandLineView
 
     /**
      * @param array $options 'option' => 'description'
+     * @param string $header Optional header text to be printed
      */
-    public function __construct($options)
+    public function __construct($options, $header = "")
     {
         $this->options = $options;
+
+        if ($header != "") {
+            print($header);
+        }
     }
 
-    public function readMenuOption()
+    public function readMenuOption($prompt = "Please select menu option:")
     {
         while (true) {
-            $this->showMenu();
+            $this->showMenu($prompt);
             try {
                 return $this->readOption('Select option: ');
             } catch (Exception $e) {
-                print "That is not a valid option\n";
+                print "Your selected option is not valid, please try again.\n";
                 continue;
             }
         }
@@ -44,17 +49,17 @@ class MenuView extends CommandLineView
         if (array_key_exists($option, $this->options)) {
             return $option;
         } else {
-            print "That is not a valid option.\n";
             throw new Exception();
         }
     }
 
     /**
      * Show all menu options
+     * @param String $prompt Message shown before menu options
      */
-    private function showMenu()
+    private function showMenu($prompt)
     {
-        print "\n\nPlease select menu option:\n\n";
+        print "\n$prompt\n\n";
         foreach ($this->options as $command => $description) {
             print "\t$command : $description\n";
         }

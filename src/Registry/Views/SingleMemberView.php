@@ -49,7 +49,6 @@ class SingleMemberView
                 print 'Not applied';
                 break;
             case 'r':
-                print 'Not applied';
                 break;
         }
     }

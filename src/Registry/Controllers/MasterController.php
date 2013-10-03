@@ -27,7 +27,7 @@ class MasterController
             'q' => 'Exit application'
         );
 
-        $this->view = new MenuView($this->options);
+        $this->view = new MenuView($this->options, "-----------\n Main menu \n-----------");
     }
 
     /**
