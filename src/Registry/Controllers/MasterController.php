@@ -9,6 +9,6 @@ class MasterController
     public function __construct()
     {
         $view = new MainMenuView();
-        print $view->readMenu();
+        print $view->readMenuOption();
     }
 }
