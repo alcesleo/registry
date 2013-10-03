@@ -38,7 +38,10 @@ class MasterController
                 print 'Edit';
                 break;
             case 's':
-                print 'Select';
+				/* START Test-data */
+				$singleMemberView = new SingleMemberView();
+				$singleMemberView->printMemberData(new MemberModel(1, "Johan", 1234567890));
+				/* END Test-data */
                 break;
         }
     }
