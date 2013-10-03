@@ -19,13 +19,17 @@ class BoatModel
 
     private function setBoatID($boatID) 
     {
-    	//Validation here
+    	if (!is_numeric($boatID) {
+            throw new \Exception("BoatID must be numeric");
+        }
     	$this->boatID = $boatID;
     }
 
     private function setOwnerID($ownerID) 
     {
-    	// Validation here
+    	if (!is_numeric($ownerID) {
+            throw new \Exception("OwnerID must be numeric");
+        }
     	$this->ownerID = $ownerID;
     }
 
@@ -39,5 +43,25 @@ class BoatModel
     {
     	//Validation here
     	$this->length = $length;
+    }
+
+    public function getBoatID() 
+    {
+        return $this->boatID;
+    }
+
+    public function getOwnerID() 
+    {
+        return $this->ownerID;
+    }
+
+    public function getBoatType() 
+    {
+        return $this->boatType;
+    }
+
+    public function getLength() 
+    {
+        return $this->length;
     }
 }

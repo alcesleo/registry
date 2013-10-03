@@ -36,4 +36,19 @@ class MemberModel
         // Validation here
         $this->socialSecurityNumber = $socialSecurityNumber;
     }
+
+    public function getMemberID()
+    {
+        return $this->memberID;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function getSocialSecurityNumber()
+    {
+        return $this->socialSecurityNumber;
+    }
 }
