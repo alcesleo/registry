@@ -49,7 +49,7 @@ class MemberStorageModel
      * @param  int $id
      * @return MemberModel
      */
-    public function getById($id)
+    public function select($id)
     {
         // Prepare statment
         $sql = "SELECT * FROM $this->tableName WHERE $this->memberId = :id";
