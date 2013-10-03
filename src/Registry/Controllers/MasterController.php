@@ -4,6 +4,7 @@ namespace Registry\Controllers;
 
 use Registry\Views\MenuView;
 
+use Registry\Views\CompactMemberListView;
 use Registry\Views\SingleMemberView;
 use Registry\Views\SelectMemberView;
 use Registry\Models\MemberModel;
@@ -27,7 +28,8 @@ class MasterController
     {
         switch ($option) {
             case 'l':
-                print 'List';
+                $compactMemberListView = new CompactMemberListView();
+                $compactMemberListView->printMemberData();
                 break;
             case 'L':
                 print 'Long list';
