@@ -12,11 +12,7 @@ class SingleMemberView
 		$name = $member->getName();
 		$ssn = $member->getSocialSecurityNumber();
 		
-		print "
-				MemberID : $memberID \n
-				Name : $name \n
-				SSN : $ssn \n
-		";
+		print "MemberID : $memberID \n Name : $name \n SSN : $ssn \n";
 	}
 }
 	
