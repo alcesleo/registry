@@ -6,7 +6,7 @@ class BoatModel
 {
     /**
      * @var Integer $boatID
-     * @var BoatTypeModel $boatType
+     * @var Integer $boatType
      * @var Float $length in metres
      */
     private $boatID;
@@ -16,10 +16,10 @@ class BoatModel
     /**
      * Constructor
      * @param Integer $boatID
-     * @param BoatTypeModel $boatType
+     * @param Integer $boatType
      * @param Float $length
      */
-    public function __construct($boatID, \Registry\Models\BoatTypeModel $boatType, $length)
+    public function __construct($boatID, $boatType, $length)
     {
         $this->setBoatID($boatID);
         $this->setBoatType($boatType);
@@ -37,7 +37,7 @@ class BoatModel
         $this->boatID = $boatID;
     }
 
-    public function setBoatType(\Registry\Models\BoatTypeModel $boatType)
+    public function setBoatType($boatType)
     {
         //Validation here
         $this->boatType = $boatType;
