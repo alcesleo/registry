@@ -6,13 +6,17 @@ use Exception;
 
 class MenuView extends CommandLineView
 {
+    /**
+     * Command line options
+     * @var array of 'option' => 'description'
+     */
+    private $options;
 
     /**
      * @param array $options 'option' => 'description'
      */
     public function __construct($options)
     {
-        // TODO: Validate
         $this->options = $options;
     }
 
