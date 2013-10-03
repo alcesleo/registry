@@ -104,9 +104,9 @@ class BoatStorageModel
         $boatList = array();
         foreach ($result as $boatData) {
             $boatList[] = new BoatModel(
-                intval($result[$this->boatId]),
-                intval($result[$this->boatType]),
-                floatval($result[$this->boatLength])
+                intval($boatData[$this->boatId]),
+                intval($boatData[$this->boatType]),
+                floatval($boatData[$this->boatLength])
             );
         }
         return $boatList;
@@ -135,9 +135,9 @@ class BoatStorageModel
         $boatList = array();
         foreach ($result as $boatData) {
             $boatList[] = new BoatModel(
-                intval($result[$this->boatId]),
-                intval($result[$this->boatType]),
-                floatval($result[$this->boatLength])
+                intval($boatData[$this->boatId]),
+                intval($boatData[$this->boatType]),
+                floatval($boatData[$this->boatLength])
             );
         }
         return $boatList;
@@ -172,16 +172,14 @@ class BoatStorageModel
     /**
      * Update a boat in the database
      * @param  BoatModel $boat The boat to update
-     * @param  int $ownerId
      * @return bool true on success, false on failure
      */
-    public function update(BoatModel $boat, $ownerId = null)
+    public function update(BoatModel $boat)
     {
         // Prepare statement
         $sql = "UPDATE $this->tableName
                 SET $this->boatType = :boatType,
-                    $this->boatLength = :boatLength,
-                    $this->ownerId = :ownerId
+                    $this->boatLength = :boatLength
                 WHERE $this->boatId = :boatId;";
 
         $stmt = $this->pdo->prepare($sql);
@@ -189,6 +187,27 @@ class BoatStorageModel
         // Bind values
         $stmt->bindValue(':boatType', $boat->getBoatType(), PDO::PARAM_INT);
         $stmt->bindValue(':boatLength', $boat->getLength(), PDO::PARAM_STR); // TODO: strval?
+        $stmt->bindValue(':boatId', $boat->getBoatID(), PDO::PARAM_INT);
+
+        return $stmt->execute();
+    }
+
+    /**
+     * Set owner of a boat
+     * @param  BoatModel $boat
+     * @param  int $ownerId
+     * @return bool
+     */
+    public function updateOwner(BoatModel $boat, $ownerId)
+    {
+        // Prepare statement
+        $sql = "UPDATE $this->tableName
+                SET $this->ownerId = :ownerId
+                WHERE $this->boatId = :boatId;";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        // Bind values
         $stmt->bindValue(':ownerId', $ownerId, PDO::PARAM_INT);
         $stmt->bindValue(':boatId', $boat->getBoatID(), PDO::PARAM_INT);
 

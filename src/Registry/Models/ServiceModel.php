@@ -6,6 +6,7 @@ use Registry\Models\BoatModel;
 use Registry\Models\BoatStorageModel;
 use Registry\Models\MemberModel;
 use Registry\Models\MemberStorageModel;
+use Exception;
 use PDO;
 
 /**
@@ -34,6 +35,10 @@ class ServiceModel
         $this->members = new MemberStorageModel($pdo);
         $this->boats = new BoatStorageModel($pdo);
     }
+
+    /*********************************************
+    Members
+    **********************************************/
 
     /**
      * @param MemberModel $member
@@ -93,5 +98,70 @@ class ServiceModel
     public function removeMember($memberId)
     {
         return $this->members->delete($memberId);
+    }
+
+    /*********************************************
+    Boats
+    **********************************************/
+
+    /**
+     * @param BoatModel $boat
+     * @param int    $ownerId
+     */
+    public function addBoat(BoatModel $boat, $ownerId = null)
+    {
+        $this->boats->insert($boat, $ownerId);
+    }
+
+    /**
+     * @param  int $boatId
+     * @return BoatModel
+     */
+    public function getBoat($boatId)
+    {
+        return $this->boats->select($boatId);
+    }
+
+    /**
+     * Get boats for selected member, if omitted returns all boats
+     * @param  int $memberId optional memberId of boats to get
+     * @return BoatModel[]            or empty array
+     */
+    public function getBoats($memberId = null)
+    {
+        try {
+            if ($memberId !== null) {
+                return $this->boats->selectByMember($memberId);
+            } else {
+                return $this->boats->selectAll();
+            }
+        } catch (Exception $e) {
+            return array();
+        }
+    }
+
+    /**
+     * Change a boat and its owner (the boatId will not be changed)
+     * @param  BoatModel $boat
+     * @param  int       $ownerId
+     * @return bool
+     */
+    public function changeBoat(BoatModel $boat, $ownerId = null)
+    {
+        // TODO: Handle rollbacks etc...
+        if ($ownerId !== null) {
+            $this->boats->updateOwner($boat, $ownerId);
+        }
+        return $this->boats->update($boat);
+    }
+
+    /**
+     * Delete a boat from the database
+     * @param  BoatModel $boat
+     * @return bool
+     */
+    public function removeBoat(BoatModel $boat)
+    {
+        return $this->boats->delete($boat->getBoatID());
     }
 }
