@@ -27,6 +27,7 @@ class MemberModel
     private $boats;
 
     // TODO: Document all functions in MemberModel
+    // TODO: Should memberID be optional? Autoincrement
     public function __construct($memberID, $name, $socialSecurityNumber, $boats = array())
     {
         $this->setMemberID($memberID);
@@ -35,7 +36,7 @@ class MemberModel
         $this->setOwnedBoats($boats);
     }
 
-    private function setMemberID($memberID)
+    public function setMemberID($memberID)
     {
         if (!is_numeric($memberID)) {
             throw new \Exception("MemberID must be numeric");
@@ -43,7 +44,7 @@ class MemberModel
         $this->memberID = $memberID;
     }
 
-    private function setName($name)
+    public function setName($name)
     {
         if ($name === "") {
             throw new \Exception("Name cannot be blank");
@@ -51,14 +52,14 @@ class MemberModel
         $this->name = $name;
     }
 
-    private function setSocialSecurityNumber($socialSecurityNumber)
+    public function setSocialSecurityNumber($socialSecurityNumber)
     {
         // TODO: Validation here
         // NOTE: Maybe fancy regex for XXXXXXXX-XXXX
         $this->socialSecurityNumber = $socialSecurityNumber;
     }
 
-    private function setOwnedBoats($boats)
+    public function setOwnedBoats($boats)
     {
         // TODO: Validation
         $this->boats = $boats;
@@ -79,7 +80,7 @@ class MemberModel
         return $this->socialSecurityNumber;
     }
 
-    public function getOwnedBoats() 
+    public function getOwnedBoats()
     {
         return $this->boats;
     }
