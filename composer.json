@@ -1,0 +1,6 @@
+{
+    "name": "alcesleo/registry",
+    "autoload": {
+        "psr-0": {"Registry\\": "src/"}
+    }
+}
