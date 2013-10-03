@@ -12,7 +12,39 @@ class SingleMemberView
 		$name = $member->getName();
 		$ssn = $member->getSocialSecurityNumber();
 		
-		print "MemberID : $memberID \n Name : $name \n SSN : $ssn \n";
+		print "
+					\n ----- Member Information -----
+					\n MemberID : $memberID 
+					\n Name : $name 
+					\n SSN : $ssn
+					\n";
+		
+		$this->showMenuOptions();
 	}
+	
+	private function showMenuOptions() {
+		$options = array(
+            'e' => 'Edit this member',
+            'd' => 'Delete this memeber',
+            'r' => 'Return to main menu'
+        );
+        $view = new MenuView($options);
+        $this->doAction($view->readMenuOption());
+	}
+	
+	private function doAction($option)
+    {
+        switch ($option) {
+            case 'e':
+                print 'Not applied';
+                break;
+            case 'd':
+                print 'Not applied';
+                break;
+            case 'r':
+                print 'Not applied';
+                break;
+        }
+    }
 }
 	
