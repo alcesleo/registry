@@ -4,19 +4,16 @@ namespace Registry\Views;
 
 use Exception;
 
-class MainMenuView extends CommandLineView
+class MenuView extends CommandLineView
 {
-    private static $options = array(
-        'l' => 'List all members',
-        'L' => 'List all members (long)',
-        'r' => 'Register new member',
-        'e' => 'Edit member',
-        's' => 'Select member'
-    );
 
-    public function __construct()
+    /**
+     * @param array $options 'option' => 'description'
+     */
+    public function __construct($options)
     {
-        //code...
+        // TODO: Validate
+        $this->options = $options;
     }
 
     public function readMenuOption()
@@ -43,6 +40,7 @@ class MainMenuView extends CommandLineView
         if (array_key_exists($option, self::$options)) {
             return $option;
         } else {
+            print "That is not a valid option.\n";
             throw new Exception();
         }
     }
