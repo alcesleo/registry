@@ -6,3 +6,4 @@ use Registry\Views\CommandLineView;
 
 $view = new CommandLineView();
 print $view->readLine('Testar: ');
+print ("elintestar");
