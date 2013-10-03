@@ -4,9 +4,8 @@ namespace Registry\Views;
 
 class FullMemberListView
 {
-	public function getMemberFromList() 
-	{
-		
-		return 1;
-	}
+    public function getMemberFromList() 
+    {
+        return 1;
+    }
 }

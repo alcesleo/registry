@@ -16,11 +16,11 @@ class SingleMemberView
         $ssn = $member->getSocialSecurityNumber();
 
         print "
-        			\n ----- Member Information -----
-        			\n MemberID : $memberID
-        			\n Name : $name
-        			\n SSN : $ssn
-        			\n";
+                    \n ----- Member Information -----
+                    \n MemberID : $memberID
+                    \n Name : $name
+                    \n SSN : $ssn
+                    \n";
 
         $this->showMenuOptions();
     }
