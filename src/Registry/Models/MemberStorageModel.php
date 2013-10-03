@@ -45,9 +45,9 @@ class MemberStorageModel
     }
 
     /**
-     * Get a user object by its ID
+     * Get a member object by its ID
      * @param  int $id
-     * @return UserModel
+     * @return MemberModel
      */
     public function getById($id)
     {
@@ -95,7 +95,7 @@ class MemberStorageModel
 
     /**
      * Update a member in the database
-     * @param  UserModel $member The member to update
+     * @param  MemberModel $member The member to update
      * @return bool true on success, false on failure
      */
     public function update(MemberModel $member)
@@ -111,7 +111,24 @@ class MemberStorageModel
         // Bind values
         $stmt->bindValue(':name', $member->getName(), PDO::PARAM_STR);
         $stmt->bindValue(':socialnumber', $member->getSocialSecurityNumber(), PDO::PARAM_STR);
-        $stmt->bindValue(':id', $member->getMemberID(), PDO::PARAM_STR);
+        $stmt->bindValue(':id', $member->getMemberID(), PDO::PARAM_INT);
+
+        return $stmt->execute();
+    }
+
+    /**
+     * Delete a member
+     * @param  int $memberid
+     * @return bool true on success, false on failure
+     */
+    public function delete($memberid)
+    {
+        $sql = "DELETE FROM $this->tableName
+                WHERE $this->memberId = :memberid";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->bindValue(':memberid', $memberid, PDO::PARAM_INT);
 
         return $stmt->execute();
     }
