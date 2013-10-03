@@ -13,7 +13,7 @@ use PDO;
  * An interface to the database models. This is here to provide a facade for
  * the database, and make it easy to use them.
  *
- * NOTE: All boolean return values indicate
+ * NOTE: All boolean return values indicate 'true on success, false on failure'
  */
 class ServiceModel
 {
@@ -148,7 +148,7 @@ class ServiceModel
      */
     public function changeBoat(BoatModel $boat, $ownerId = null)
     {
-        // TODO: Handle rollbacks etc...
+        // NOTE: Should handle rollbacks etc... Really not within time constraints
         if ($ownerId !== null) {
             $this->boats->updateOwner($boat, $ownerId);
         }
