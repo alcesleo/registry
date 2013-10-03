@@ -13,6 +13,7 @@ class MasterController
 {
     public function __construct()
     {
+        // TODO: While not q
         $options = array(
             'l' => 'List all members',
             'L' => 'List all members (long)',
@@ -43,7 +44,7 @@ class MasterController
             case 's':
 				$selectMemberView = new SelectMemberView();
 				$singleMemberView = new SingleMemberView();
-				
+
 				// Get the user you want to display/change/etc
 				$member = $selectMemberView->getSelectedMember();
 
