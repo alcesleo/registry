@@ -4,18 +4,18 @@ namespace Registry\Models;
 
 class MemberModel
 {
-	private $memberID;
-	private $name;
-	private $socialSecurityNumber;
+    private $memberID;
+    private $name;
+    private $socialSecurityNumber;
 
     public function __construct($memberID, $name, $socialSecurityNumber)
     {
         $this->setMemberID($memberID);
-    	$this->setName($name);
+        $this->setName($name);
         $this->setSocialSecurityNumber($socialSecurityNumber);
     }
 
-    private function setMemberID($memberID) 
+    private function setMemberID($memberID)
     {
         if (!is_numeric($memberID)) {
             throw new \Exception("MemberID must be numeric");
@@ -23,7 +23,7 @@ class MemberModel
         $this->memberID = $memberID;
     }
 
-    private function setName($name) 
+    private function setName($name)
     {
         if ($name === "") {
             throw new \Exception("Name cannot be blank");
@@ -31,7 +31,7 @@ class MemberModel
         $this->name = $name;
     }
 
-    private function setSocialSecurityNumber($socialSecurityNumber) 
+    private function setSocialSecurityNumber($socialSecurityNumber)
     {
         // Validation here
         $this->socialSecurityNumber = $socialSecurityNumber;
