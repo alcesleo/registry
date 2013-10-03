@@ -7,6 +7,11 @@ class MemberModel
     private $memberID;
     private $name;
     private $socialSecurityNumber;
+	
+	/**
+	 * @var array of boats 
+	*/
+	private $boats;
 
     public function __construct($memberID, $name, $socialSecurityNumber)
     {
