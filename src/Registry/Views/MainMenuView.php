@@ -19,7 +19,7 @@ class MainMenuView extends CommandLineView
         //code...
     }
 
-    public function readMenu()
+    public function readMenuOption()
     {
         while (true) {
             $this->showMenu();
