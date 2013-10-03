@@ -18,7 +18,7 @@ class SelectMemberView
             '5' => 'Peter Griffin'
         );
         $menu = new MenuView($memberID);
-        $member = $this->getMemberObject($menu->readMenuOption());
+        $member = $this->getMemberObject($menu->readMenuOption("Please select user: "));
 		
 		return $member;
 	}
