@@ -45,11 +45,20 @@ class ServiceModel
 
     /**
      * @param  int $memberId
-     * @return bool
+     * @return MemberModel
      */
     public function getMember($memberId)
     {
         return $this->members->select($memberId);
+    }
+
+    /**
+     * Get all members in database
+     * @return MemberModel[]
+     */
+    public function getMembers()
+    {
+        return $this->members->selectAll();
     }
 
     /**

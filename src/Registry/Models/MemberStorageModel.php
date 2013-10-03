@@ -74,6 +74,37 @@ class MemberStorageModel
     }
 
     /**
+     * Get all members
+     * @return MemberModel[]
+     */
+    public function selectAll()
+    {
+        // Prepare statment
+        $sql = "SELECT * FROM $this->tableName";
+        $stmt = $this->pdo->prepare($sql);
+
+        // Get data from pdo
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Error handling
+        if (! $result) {
+            throw new Exception('Member not found');
+        }
+
+        // Create objects
+        $memberList = array();
+        foreach ($result as $memberData) {
+            $memberList[] = new MemberModel(
+                $memberData[$this->memberId],
+                $memberData[$this->memberName],
+                $memberData[$this->socialNumber]
+            );
+        }
+        return $memberList;
+    }
+
+    /**
      * Insert a member into the database
      * @param  MemberModel $member
      * @return bool true on success, false on failure
