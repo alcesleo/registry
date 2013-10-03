@@ -2,11 +2,17 @@
 
 namespace Registry\Views;
 
-class MainMenuView
+class MainMenuView extends CommandLineView
 {
     public function __construct()
     {
         //code...
+    }
+
+    public function readMenu()
+    {
+        $this->showMenu();
+        $option = $this->readLine();
     }
 
     public function showMenu()
