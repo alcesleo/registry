@@ -2,7 +2,6 @@
 <?php
 require('./vendor/autoload.php');
 
-use Registry\Views\CommandLineView;
+use Registry\Controllers\MasterController;
 
-$view = new CommandLineView();
-print $view->readLine('Testar: ');
+$ctrl = new MasterController();
