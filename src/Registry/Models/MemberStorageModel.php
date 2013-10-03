@@ -67,7 +67,7 @@ class MemberStorageModel
         }
 
         return new MemberModel(
-            $result[$this->memberId],
+            intval($result[$this->memberId]),
             $result[$this->memberName],
             $result[$this->socialNumber]
         );
@@ -96,7 +96,7 @@ class MemberStorageModel
         $memberList = array();
         foreach ($result as $memberData) {
             $memberList[] = new MemberModel(
-                $memberData[$this->memberId],
+                intval($memberData[$this->memberId]),
                 $memberData[$this->memberName],
                 $memberData[$this->socialNumber]
             );
