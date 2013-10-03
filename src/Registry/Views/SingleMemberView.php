@@ -28,7 +28,8 @@ class SingleMemberView
 		$this->showMenuOptions();
 	}
 	
-	private function showMenuOptions() {
+	private function showMenuOptions() 
+	{
 		$options = array(
             'e' => 'Edit this member',
             'd' => 'Delete this memeber',
