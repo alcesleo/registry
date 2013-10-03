@@ -68,7 +68,7 @@ class BoatStorageModel
             throw new Exception('Boat not found');
         }
 
-        // TODO Break creation into function?
+        // TODO: Break object creation into function
         return new BoatModel(
             intval($result[$this->boatId]),
             intval($result[$this->boatType]),
