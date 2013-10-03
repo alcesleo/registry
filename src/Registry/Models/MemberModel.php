@@ -78,4 +78,9 @@ class MemberModel
     {
         return $this->socialSecurityNumber;
     }
+
+    public function getOwnedBoats() 
+    {
+        return $this->boats;
+    }
 }
