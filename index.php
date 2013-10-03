@@ -5,3 +5,4 @@ require('./vendor/autoload.php');
 use Registry\Controllers\MasterController;
 
 $ctrl = new MasterController();
+$ctrl->run();
