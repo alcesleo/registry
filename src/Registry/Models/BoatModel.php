@@ -29,7 +29,7 @@ class BoatModel
     /**
      * @param Integer $boatID 
      */
-    private function setBoatID($boatID)
+    public function setBoatID($boatID)
     {
         if (! is_numeric($boatID)) {
             throw new \Exception("BoatID must be numeric");
@@ -37,7 +37,7 @@ class BoatModel
         $this->boatID = $boatID;
     }
 
-    private function setBoatType(\Registry\Models\BoatTypeModel $boatType)
+    public function setBoatType(\Registry\Models\BoatTypeModel $boatType)
     {
         //Validation here
         $this->boatType = $boatType;
@@ -46,7 +46,7 @@ class BoatModel
     /**
      * @param Float $length 
      */
-    private function setLength($length)
+    public function setLength($length)
     {
         if (! is_numeric($length)) {
             throw new \Exception("Length must be numeric");
