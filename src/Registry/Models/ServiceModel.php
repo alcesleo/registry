@@ -44,12 +44,45 @@ class ServiceModel
     }
 
     /**
-     * [getMember description]
      * @param  int $memberId
      * @return bool
      */
     public function getMember($memberId)
     {
         return $this->members->select($memberId);
+    }
+
+    /**
+     * [getMemberWithBoats description]
+     * @param  int $memberId
+     * @return MemberObject with reference to her boats
+     */
+    public function getMemberWithBoats($memberId)
+    {
+        /*
+        $member = $this->getMember($memberId);
+        $boats = $this->getBoats($memberId);
+        $member->setOwnedBoats($boats);
+        return $member;
+        */
+    }
+
+    /**
+     * Changes the properties of a member based on its memberId (which will not be changed)
+     * @param  MemberModel $member
+     * @return bool
+     */
+    public function changeMember($member)
+    {
+        return $this->members->update($member);
+    }
+
+    /**
+     * @param  int $memberId
+     * @return bool
+     */
+    public function removeMember($memberId)
+    {
+        return $this->members->delete($memberId);
     }
 }
