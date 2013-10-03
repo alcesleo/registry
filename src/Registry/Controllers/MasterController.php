@@ -43,8 +43,9 @@ class MasterController
 				$selectMemberView = new SelectMemberView();
 				$singleMemberView = new SingleMemberView();
 				
+				// Get the user you want to display/change/etc
 				$member = $selectMemberView->getSelectedMember();
-				
+
 				$singleMemberView->printMemberData($member);
 				/* END Test-data */
                 break;
