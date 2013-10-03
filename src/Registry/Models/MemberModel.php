@@ -2,22 +2,36 @@
 
 namespace Registry\Models;
 
+use Registry\Models\BoatModel;
+
 class MemberModel
 {
+    /**
+     * @var int
+     */
     private $memberID;
-    private $name;
-    private $socialSecurityNumber;
-	
-	/**
-	 * @var array of boats 
-	*/
-	private $boats;
 
-    public function __construct($memberID, $name, $socialSecurityNumber)
+    /**
+     * @var string
+     */
+    private $name;
+
+    /**
+     * @var string
+     */
+    private $socialSecurityNumber;
+
+    /**
+     * @var BoatModel[]
+     */
+    private $boats;
+
+    public function __construct($memberID, $name, $socialSecurityNumber, $boats = array())
     {
         $this->setMemberID($memberID);
         $this->setName($name);
         $this->setSocialSecurityNumber($socialSecurityNumber);
+        $this->setOwnedBoats($boats);
     }
 
     private function setMemberID($memberID)
@@ -38,8 +52,14 @@ class MemberModel
 
     private function setSocialSecurityNumber($socialSecurityNumber)
     {
-        // Validation here
+        // TODO: Validation here
         $this->socialSecurityNumber = $socialSecurityNumber;
+    }
+
+    private function setOwnedBoats($boats)
+    {
+        // TODO: Validation
+        $this->boats = $boats;
     }
 
     public function getMemberID()
@@ -56,4 +76,5 @@ class MemberModel
     {
         return $this->socialSecurityNumber;
     }
+
 }
