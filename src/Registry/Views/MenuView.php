@@ -37,7 +37,7 @@ class MenuView extends CommandLineView
     private function readOption($prompt = '')
     {
         $option = $this->readLine();
-        if (array_key_exists($option, self::$options)) {
+        if (array_key_exists($option, $this->options)) {
             return $option;
         } else {
             print "That is not a valid option.\n";
@@ -51,7 +51,7 @@ class MenuView extends CommandLineView
     private function showMenu()
     {
         print "\nPlease select menu option:\n";
-        foreach (self::$options as $command => $description) {
+        foreach ($this->options as $command => $description) {
             print "$command : $description\n";
         }
     }
