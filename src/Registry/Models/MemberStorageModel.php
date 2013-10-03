@@ -40,7 +40,6 @@ class MemberStorageModel
                 $this->memberName TEXT NOT NULL,
                 $this->socialNumber TEXT NOT NULL
             )";
-
         $this->pdo->exec($sql);
     }
 
@@ -67,7 +66,11 @@ class MemberStorageModel
             throw new Exception('Member not found');
         }
 
-        return new MemberModel($result[$this->memberId], $result[$this->memberName], $result[$this->socialNumber]);
+        return new MemberModel(
+            $result[$this->memberId],
+            $result[$this->memberName],
+            $result[$this->socialNumber]
+        );
     }
 
     /**
@@ -81,12 +84,13 @@ class MemberStorageModel
 
         // Prepare statement
         $sql = "INSERT INTO $this->tableName
-                ($this->memberName, $this->socialNumber)
-                VALUES (:name, :socialnumber);";
+                ($this->memberId, $this->memberName, $this->socialNumber)
+                VALUES (:id, :name, :socialnumber);";
 
         $stmt = $this->pdo->prepare($sql);
 
         // Bind values
+        $stmt->bindValue(':id', $member->getMemberID(), PDO::PARAM_INT);
         $stmt->bindValue(':name', $member->getName(), PDO::PARAM_STR);
         $stmt->bindValue(':socialnumber', $member->getSocialSecurityNumber(), PDO::PARAM_STR);
 
