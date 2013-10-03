@@ -2,7 +2,7 @@
 
 namespace Registry\Models;
 
-class Boat
+class BoatModel
 {
     public function __construct()
     {
