@@ -26,6 +26,7 @@ class MemberModel
      */
     private $boats;
 
+    // TODO: Document all functions in MemberModel
     public function __construct($memberID, $name, $socialSecurityNumber, $boats = array())
     {
         $this->setMemberID($memberID);
@@ -53,6 +54,7 @@ class MemberModel
     private function setSocialSecurityNumber($socialSecurityNumber)
     {
         // TODO: Validation here
+        // NOTE: Maybe fancy regex for XXXXXXXX-XXXX
         $this->socialSecurityNumber = $socialSecurityNumber;
     }
 
@@ -76,5 +78,4 @@ class MemberModel
     {
         return $this->socialSecurityNumber;
     }
-
 }
