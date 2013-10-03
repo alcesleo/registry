@@ -37,7 +37,7 @@ class SingleMemberView
     }
 
     /**
-     * @param string $option [vald key]
+     * @param string $option
      */
     private function doAction($option)
     {
