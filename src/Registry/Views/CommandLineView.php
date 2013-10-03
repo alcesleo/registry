@@ -12,6 +12,6 @@ class CommandLineView
     public function readLine($prompt = '')
     {
         print $prompt;
-        return fread(STDIN, 80);
+        return trim(fread(STDIN, 80));
     }
 }
