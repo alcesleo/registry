@@ -39,7 +39,6 @@ class MasterController
                 print 'Edit';
                 break;
             case 's':
-				/* START Test-data */
 				$selectMemberView = new SelectMemberView();
 				$singleMemberView = new SingleMemberView();
 				
@@ -47,7 +46,6 @@ class MasterController
 				$member = $selectMemberView->getSelectedMember();
 
 				$singleMemberView->printMemberData($member);
-				/* END Test-data */
                 break;
         }
     }
