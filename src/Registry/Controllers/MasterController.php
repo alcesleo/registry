@@ -19,6 +19,27 @@ class MasterController
             's' => 'Select member'
         );
         $view = new MenuView($options);
-        print $view->readMenuOption();
+        $this->doAction($view->readMenuOption());
+    }
+
+    private function doAction($option)
+    {
+        switch ($option) {
+            case 'l':
+                print 'List';
+                break;
+            case 'L':
+                print 'Long list';
+                break;
+            case 'r':
+                print 'Register';
+                break;
+            case 'e':
+                print 'Edit';
+                break;
+            case 's':
+                print 'Select';
+                break;
+        }
     }
 }
