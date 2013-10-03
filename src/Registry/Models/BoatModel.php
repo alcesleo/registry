@@ -7,17 +7,17 @@ class BoatModel
     /**
      * @var Integer $boatID
      * @var BoatTypeModel $boatType
-     * @var Float $length 
+     * @var Float $length in metres
      */
     private $boatID;
     private $boatType;
     private $length;
 
     /**
-     * Constructor 
-     * @param Integer $boatID 
+     * Constructor
+     * @param Integer $boatID
      * @param BoatTypeModel $boatType
-     * @param Float $length 
+     * @param Float $length
      */
     public function __construct($boatID, \Registry\Models\BoatTypeModel $boatType, $length)
     {
@@ -27,7 +27,7 @@ class BoatModel
     }
 
     /**
-     * @param Integer $boatID 
+     * @param Integer $boatID
      */
     public function setBoatID($boatID)
     {
@@ -44,7 +44,7 @@ class BoatModel
     }
 
     /**
-     * @param Float $length 
+     * @param Float $length
      */
     public function setLength($length)
     {
