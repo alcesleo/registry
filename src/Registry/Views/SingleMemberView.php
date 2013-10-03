@@ -6,6 +6,12 @@ use Registry\Models\MemberModel;
 
 class SingleMemberView
 {
+	/**
+	 * @param MemberModel $member
+	 * @var string $memberID taken from MemberModel $member
+	 * @var string $name taken from MemberModel $member
+	 * @var string $ssn taken from MemberModel $member
+	 */
 	public function printMemberData(MemberModel $member) 
 	{
 		$memberID = $member->getMemberID();
@@ -32,6 +38,9 @@ class SingleMemberView
         $this->doAction($view->readMenuOption());
 	}
 	
+	/**
+	 * @param string $option [vald key]
+	 */
 	private function doAction($option)
     {
         switch ($option) {
