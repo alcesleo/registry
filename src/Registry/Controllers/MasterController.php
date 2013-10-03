@@ -5,6 +5,7 @@ namespace Registry\Controllers;
 use Registry\Views\MenuView;
 
 use Registry\Views\SingleMemberView;
+use Registry\Views\SelectMemberView;
 use Registry\Models\MemberModel;
 
 class MasterController
@@ -39,8 +40,12 @@ class MasterController
                 break;
             case 's':
 				/* START Test-data */
+				$selectMemberView = new SelectMemberView();
 				$singleMemberView = new SingleMemberView();
-				$singleMemberView->printMemberData(new MemberModel(1, "Johan", 1234567890));
+				
+				$member = $selectMemberView->getSelectedMember();
+				
+				$singleMemberView->printMemberData($member);
 				/* END Test-data */
                 break;
         }
