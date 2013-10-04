@@ -55,7 +55,7 @@ class MenuView extends CommandLineView
 
     /**
      * Show all menu options
-     * @param String $prompt Message shown before menu options
+     * @param string $prompt Message shown before menu options
      */
     private function showMenu($prompt)
     {
