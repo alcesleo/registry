@@ -46,6 +46,34 @@ class BoatStorageModel
     }
 
     /**
+     * Create a BoatModel-object from the array returned from database
+     * @param  array $properties
+     * @return BoatModel
+     */
+    private function constructBoatFromArray($properties)
+    {
+        return new BoatModel(
+            intval($properties[$this->boatId]),
+            intval($properties[$this->boatType]),
+            floatval($properties[$this->boatLength])
+        );
+    }
+
+    /**
+     * Passes an array through constructBoatFromArray
+     * @param  array $properties indexed array of associative arrays of boat-properties
+     * @return BoatModel[]
+     */
+    private function constructBoatArrayFromArray($propertiesArray)
+    {
+        $boats = array();
+        foreach ($propertiesArray as $boatData) {
+            $boats[] = $this->constructBoatFromArray($boatData);
+        }
+        return $boats;
+    }
+
+    /**
      * Get a boat object by its ID
      * @param  int $id
      * @return BoatModel
@@ -68,12 +96,7 @@ class BoatStorageModel
             throw new Exception('Boat not found');
         }
 
-        // TODO: Break object creation into function
-        return new BoatModel(
-            intval($result[$this->boatId]),
-            intval($result[$this->boatType]),
-            floatval($result[$this->boatLength])
-        );
+        return $this->constructBoatFromArray($result);
     }
 
     // TODO: Throws docs
@@ -101,15 +124,7 @@ class BoatStorageModel
         }
 
         // Create objects
-        $boatList = array();
-        foreach ($result as $boatData) {
-            $boatList[] = new BoatModel(
-                intval($boatData[$this->boatId]),
-                intval($boatData[$this->boatType]),
-                floatval($boatData[$this->boatLength])
-            );
-        }
-        return $boatList;
+        return $this->constructBoatArrayFromArray($result);
     }
 
     /**
@@ -131,16 +146,7 @@ class BoatStorageModel
             throw new Exception('No boats found');
         }
 
-        // Create objects
-        $boatList = array();
-        foreach ($result as $boatData) {
-            $boatList[] = new BoatModel(
-                intval($boatData[$this->boatId]),
-                intval($boatData[$this->boatType]),
-                floatval($boatData[$this->boatLength])
-            );
-        }
-        return $boatList;
+        return $this->constructBoatArrayFromArray($result);
     }
 
     /**
