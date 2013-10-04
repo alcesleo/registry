@@ -55,6 +55,8 @@ class MasterController
                 print 'Register';
                 break;
             case 'e':
+                $selectMemberView = new SelectMemberView();
+                $member = $selectMemberView->getSelectedMember();
                 print 'Edit';
                 break;
             case 's':
