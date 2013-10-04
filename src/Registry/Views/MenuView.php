@@ -59,7 +59,7 @@ class MenuView extends CommandLineView
      */
     private function showMenu($prompt)
     {
-        print "\n$prompt\n\n";
+        print "\n\n\n$prompt\n\n";
         foreach ($this->options as $command => $description) {
             print "\t$command : $description\n";
         }
