@@ -6,7 +6,7 @@ use Registry\Models\BoatModel;
 use Exception;
 use PDO;
 
-// TODO: Fix standard, fix duplication
+// TODO: Fix standard
 class BoatStorageModel
 {
     /**
