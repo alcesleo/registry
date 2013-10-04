@@ -6,6 +6,7 @@ use Registry\Models\BoatModel;
 use Exception;
 use PDO;
 
+// TODO: Fix standard, fix duplication
 class BoatStorageModel
 {
     /**
@@ -27,13 +28,12 @@ class BoatStorageModel
     public function __construct(PDO $database)
     {
         $this->pdo = $database;
-        $this->createTable();
     }
 
     /**
      * Creates the table if it doesn't already exist.
      */
-    private function createTable()
+    public function createTable()
     {
         $sql = "CREATE TABLE IF NOT EXISTS $this->tableName
             (
