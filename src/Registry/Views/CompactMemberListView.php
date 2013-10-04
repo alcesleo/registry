@@ -16,6 +16,9 @@ class CompactMemberListView
     private $memberModelArray;
     private $service;
 
+    /**
+     * @var PDO $db
+     */
     public function __construct()
     {
         // Create databse and start service
