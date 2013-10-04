@@ -32,10 +32,13 @@ class ServiceModel
      */
     public function __construct(PDO $pdo)
     {
+        // Initialize the data access objects
         $this->members = new MemberStorageModel($pdo);
         $this->boats = new BoatStorageModel($pdo);
 
-        // TODO: Create tables here?
+        // Make sure the tables exist
+        $this->members->createTable();
+        $this->boats->createTable();
     }
 
     /**
