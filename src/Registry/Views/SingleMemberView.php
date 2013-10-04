@@ -8,6 +8,9 @@ class SingleMemberView
 {
     /**
      * @param MemberModel $member
+     * @var int $memberID
+     * @var string $name
+     * @var string $ssn
      */
     public function printMemberData(MemberModel $member)
     {
@@ -21,35 +24,5 @@ class SingleMemberView
                     \n Name : $name
                     \n SSN : $ssn
                     \n";
-
-        $this->showMenuOptions();
-    }
-
-    private function showMenuOptions()
-    {
-        $options = array(
-            'e' => 'Edit this member',
-            'd' => 'Delete this memeber',
-            'r' => 'Return to main menu'
-        );
-        $view = new MenuView($options);
-        $this->doAction($view->readMenuOption());
-    }
-
-    /**
-     * @param string $option
-     */
-    private function doAction($option)
-    {
-        switch ($option) {
-            case 'e':
-                print 'Not applied';
-                break;
-            case 'd':
-                print 'Not applied';
-                break;
-            case 'r':
-                break;
-        }
     }
 }
