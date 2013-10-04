@@ -34,11 +34,9 @@ class ServiceModel
     {
         $this->members = new MemberStorageModel($pdo);
         $this->boats = new BoatStorageModel($pdo);
-    }
 
-    /*********************************************
-    Members
-    **********************************************/
+        // TODO: Create tables here?
+    }
 
     /**
      * @param MemberModel $member
@@ -67,18 +65,16 @@ class ServiceModel
     }
 
     /**
-     * [getMemberWithBoats description]
+     * Convenience function for getting a member by id, and her owned boats
      * @param  int $memberId
      * @return MemberObject with reference to her boats
      */
     public function getMemberWithBoats($memberId)
     {
-        /*
         $member = $this->getMember($memberId);
-        $boats = $this->getBoats($memberId);
+        $boats = $this->getBoats($member);
         $member->setOwnedBoats($boats);
         return $member;
-        */
     }
 
     /**
@@ -86,30 +82,27 @@ class ServiceModel
      * @param  MemberModel $member
      * @return bool
      */
-    public function changeMember($member)
+    public function changeMember(MemberModel $member)
     {
         return $this->members->update($member);
     }
 
     /**
-     * @param  int $memberId
+     * @param  MemberModel $member
      * @return bool
      */
-    public function removeMember($memberId)
+    public function removeMember(MemberModel $member)
     {
-        return $this->members->delete($memberId);
+        return $this->members->delete($member->getMemberID());
     }
 
-    /*********************************************
-    Boats
-    **********************************************/
-
     /**
-     * @param BoatModel $boat
-     * @param int    $ownerId
+     * @param BoatModel    $boat
+     * @param MemberModel  $owner optional owner of boat
      */
-    public function addBoat(BoatModel $boat, $ownerId = null)
+    public function addBoat(BoatModel $boat, MemberModel $owner = null)
     {
+        $ownerId = $owner instanceof MemberModel ? $owner->getMemberID() : null;
         $this->boats->insert($boat, $ownerId);
     }
 
@@ -124,14 +117,14 @@ class ServiceModel
 
     /**
      * Get boats for selected member, if omitted returns all boats
-     * @param  int $memberId optional memberId of boats to get
+     * @param  MemberModel $member    optional owner of boats to get
      * @return BoatModel[]            or empty array
      */
-    public function getBoats($memberId = null)
+    public function getBoats(MemberModel $member = null)
     {
         try {
-            if ($memberId !== null) {
-                return $this->boats->selectByMember($memberId);
+            if ($member instanceof MemberModel) {
+                return $this->boats->selectByMember($member->getMemberID());
             } else {
                 return $this->boats->selectAll();
             }
@@ -141,18 +134,22 @@ class ServiceModel
     }
 
     /**
-     * Change a boat and its owner (the boatId will not be changed)
      * @param  BoatModel $boat
-     * @param  int       $ownerId
      * @return bool
      */
-    public function changeBoat(BoatModel $boat, $ownerId = null)
+    public function changeBoat(BoatModel $boat)
     {
-        // NOTE: Should handle rollbacks etc... Really not within time constraints
-        if ($ownerId !== null) {
-            $this->boats->updateOwner($boat, $ownerId);
-        }
         return $this->boats->update($boat);
+    }
+
+    /**
+     * @param  BoatModel   $boat
+     * @param  MemberModel $newOwner
+     * @return bool
+     */
+    public function changeBoatOwner(BoatModel $boat, MemberModel $newOwner)
+    {
+        return $this->boats->updateOwner($boat, $newOwner->getMemberID());
     }
 
     /**

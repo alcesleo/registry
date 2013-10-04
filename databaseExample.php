@@ -1,5 +1,8 @@
 #!/usr/bin/env php -q
 <?php
+/**
+ * This file is meant to test and demonstrate use of the database with working examples.
+ */
 require('./vendor/autoload.php');
 
 // Dependancies
@@ -8,24 +11,32 @@ use Registry\Models\MemberModel;
 use Registry\Models\BoatModel;
 use Registry\Models\BoatTypeModel as BoatType;
 
-// Initialze database
+/**
+ * Initialzing the database
+ */
 
-// Create temporary database (lasts as long as the program is running)
+// Create temporary database
+// Lasts as long as the program is running, no persistance.
+// Great for testing
 $db = new PDO('sqlite::memory:');
 
 // Create a database in a file
+// This is what we will do in the final product.
+// NOTE: The folder must exist for this to work.
 //$db = new PDO('sqlite:database/registry.sqlite');
 
 // This object does everything with the database.
 // It's pretty short and documented - No need to look at the StorageModels
 $service = new ServiceModel($db);
 
-// Test database
+/**
+ * Using the database
+ */
 
 // Add members
-$jamie = new MemberModel(5, 'The Kingslayer', '123456-1234');
-$cersei = new MemberModel(7, 'Cersei Lannister', '654321-0987');
-$sansa = new MemberModel(2, 'Sansa Stark', '354321-0487');
+$jamie = new MemberModel(1, 'The Kingslayer', '123456-1234');
+$cersei = new MemberModel(2, 'Cersei Lannister', '654321-0987');
+$sansa = new MemberModel(3, 'Sansa Stark', '354321-0487');
 $service->addMember($jamie);
 $service->addMember($cersei);
 $service->addMember($sansa);
@@ -35,39 +46,44 @@ $jamie->setName('Jamie Lannister');
 $service->changeMember($jamie);
 
 // Select members
-$service->getMember(5);
-$service->getMember(7);
+$service->getMember(1); // returns Jamie
+$service->getMember(2); // returns Cersei
 
 // Delete members
-$service->removeMember(2); // Goodbye Sansa!
+$service->removeMember($sansa); // Goodbye Sansa!
 
 // List members
 $allMembers = $service->getMembers();
 
 // Add boats
-$boat1 = new BoatModel(3, BoatType::SAILBOAT, 7.5);
-$boat2 = new BoatModel(5, BoatType::MOTORBOAT, 5);
-$boat3 = new BoatModel(7, BoatType::CANOE, 3);
-$service->addBoat($boat1, 7); // Both belong to Cersei
-$service->addBoat($boat2, 7);
-$service->addBoat($boat3); // This one has no owner
+$sailBoat = new BoatModel(1, BoatType::SAILBOAT, 7.5);
+$motorBoat = new BoatModel(2, BoatType::MOTORBOAT, 5);
+$canoe = new BoatModel(3, BoatType::CANOE, 3);
+$service->addBoat($sailBoat, $cersei); // Both belong to Cersei
+$service->addBoat($motorBoat, $cersei);
+$service->addBoat($canoe); // This one has no owner
 
 // Change boat
-$boat2->setLength(11.3);
-$service->changeBoat($boat2);
+$motorBoat->setLength(11.3);
+$service->changeBoat($motorBoat);
 
 // Change owner of boat
-$service->changeBoat($boat2, $jamie->getMemberID()); // Now belongs to Jamie
+$service->changeBoatOwner($canoe, $jamie); // Now belongs to Jamie
 
 // Select boats
-$jamiesBoats = $service->getBoats($jamie->getMemberID());
+$cerseisBoats = $service->getBoats($cersei);
 $allBoats = $service->getBoats();
-$sailBoat = $service->getBoat(3);
+$sailBoat = $service->getBoat(1);
 
 // Delete boats
 $service->removeBoat($sailBoat);
-var_dump($service->getBoats());
 
+// Get member with her boats
+$cersei = $service->getMemberWithBoats(2);
+
+// Get boats for a member
+$jamiesBoats = $service->getBoats($jamie);
+$jamie->setOwnedBoats($jamiesBoats);
 
 
 
