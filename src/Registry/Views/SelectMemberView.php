@@ -3,22 +3,46 @@
 namespace Registry\Views;
 
 use Registry\Views\MenuView;
+
 use Registry\Models\MemberModel;
+use Registry\Models\ServiceModel;
+
+use PDO;
 
 class SelectMemberView
 {
+    
+    private $service;
+    
+    private $memberModelArray;
+    
+    public function __construct()
+    {
+        // Create temporary database (lasts as long as the program is running)
+        $db = new PDO('sqlite:database/registry.sqlite');
+        $this->service = new ServiceModel($db);
+        $this->memberModelArray = $this->service->getMembers();
+        
+    }
+    
+    /**
+     * @var array $menuArray
+     * @var MenuView $menu
+     * @var memberModel $member
+     * @return memberModel $member
+     */
     public function getSelectedMember()
     {
-
-        $memberID = array(
-            '1' => 'Johan Andersson',
-            '2' => 'Stefan Karlsson',
-            '3' => 'Reggie Jacksson',
-            '4' => 'Zlatan',
-            '5' => 'Peter Griffin'
-        );
-        $menu = new MenuView($memberID);
-        $member = $this->getMemberObject($menu->readMenuOption("Please select user: "));
+        //Sets array for menu
+        $menuArray = array();
+        foreach ($this->memberModelArray as $obj)
+            array_push($menuArray, $obj->getName());
+        
+        //Start emnu view
+        $menu = new MenuView($menuArray);
+        
+        //Print menu and get selected member-object
+        $member = $this->memberModelArray[$menu->readMenuOption("Please select user: ")];
 
         return $member;
     }
