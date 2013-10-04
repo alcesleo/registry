@@ -84,14 +84,3 @@ $cersei = $service->getMemberWithBoats(2);
 // Get boats for a member
 $jamiesBoats = $service->getBoats($jamie);
 $jamie->setOwnedBoats($jamiesBoats);
-
-
-
-
-
-
-
-
-
-
-
