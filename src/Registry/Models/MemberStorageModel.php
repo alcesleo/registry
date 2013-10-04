@@ -6,7 +6,7 @@ use Registry\Models\MemberModel;
 use Exception;
 use PDO;
 
-// TODO: Fix standard, fix duplication
+// TODO: Fix standard
 class MemberStorageModel
 {
     /**
@@ -44,6 +44,35 @@ class MemberStorageModel
     }
 
     /**
+     * Construct a MemberModel object from an array of properties
+     * @param  array $properties
+     * @return MemberModel
+     */
+    private function constructMemberFromArray($properties)
+    {
+        return new MemberModel(
+            intval($properties[$this->memberId]),
+            $properties[$this->memberName],
+            $properties[$this->socialNumber]
+        );
+    }
+
+    /**
+     * Run an index array of property-arrays through the constructMemberFromArray function
+     * @param  array $propertiesArray indexed array of associative arrays of properties for members
+     * @return MemberModel[]
+     */
+    private function constructMemberArrayFromArray($propertiesArray)
+    {
+        // Create objects
+        $members = array();
+        foreach ($propertiesArray as $memberData) {
+            $members[] = $this->constructMemberFromArray($memberData);
+        }
+        return $members;
+    }
+
+    /**
      * Get a member object by its ID
      * @param  int $id
      * @return MemberModel
@@ -66,11 +95,7 @@ class MemberStorageModel
             throw new Exception('Member not found');
         }
 
-        return new MemberModel(
-            intval($result[$this->memberId]),
-            $result[$this->memberName],
-            $result[$this->socialNumber]
-        );
+        return $this->constructMemberFromArray($result);
     }
 
     /**
@@ -93,15 +118,7 @@ class MemberStorageModel
         }
 
         // Create objects
-        $memberList = array();
-        foreach ($result as $memberData) {
-            $memberList[] = new MemberModel(
-                intval($memberData[$this->memberId]),
-                $memberData[$this->memberName],
-                $memberData[$this->socialNumber]
-            );
-        }
-        return $memberList;
+        $this->constructMemberArrayFromArray($result);
     }
 
     /**
