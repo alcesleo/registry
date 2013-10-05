@@ -80,6 +80,8 @@ class ServiceModel
         return $member;
     }
 
+    // TODO: Implement getAllMembersWithBoats()
+
     /**
      * Changes the properties of a member based on its memberId (which will not be changed)
      * @param  MemberModel $member
