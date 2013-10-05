@@ -120,7 +120,7 @@ class MemberStorageModel
         }
 
         // Create objects
-        $this->constructMemberArrayFromArray($result);
+        return $this->constructMemberArrayFromArray($result);
     }
 
     /**
