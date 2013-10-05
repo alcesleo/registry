@@ -25,6 +25,8 @@ class CompactMemberListView
         $db = new PDO('sqlite:database/registry.sqlite');
         $this->service = new ServiceModel($db);
         
+        // TODO: Change the call to getAllMembersWithBoats after its been implemented. 
+        //$this->memberModelArray = $this->service->getAllMembersWithBoats();
         $this->memberModelArray = $this->service->getMembers();
     }
     
@@ -35,19 +37,20 @@ class CompactMemberListView
      */
     public function printMemberData()
     {
-        print "     \n ----- Member Information -----";
+        print "     \n ----- Member list -----\n\n";
         
+        // http://stackoverflow.com/questions/7039010/how-to-make-alignment-on-console-in-php
+        $pattern = "|%-3s |%-25s |%-11s |%-12s |\n";
+        printf($pattern, 'ID', 'Name', 'SSN', 'Nr. of boats'); // Table header
+
         foreach ($this->memberModelArray as $obj) 
         {
             $memberID = $obj->getMemberID();
             $name = $obj->getName();
             $ssn = $obj->getSocialSecurityNumber();
+            $boats = $obj->getOwnedBoats();
             
-            print "
-                    \n MemberID : $memberID
-                    \n Name : $name
-                    \n SSN : $ssn
-                    \n ------------------------------";
+            printf($pattern, $memberID, $name, $ssn, count($boats));
         }
     }
 }
