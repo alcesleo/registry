@@ -75,6 +75,7 @@ class MemberStorageModel
     /**
      * Get a member object by its ID
      * @param  int $id
+     * @throws Exception if no member with param ID was found
      * @return MemberModel
      */
     public function select($id)
@@ -100,6 +101,7 @@ class MemberStorageModel
 
     /**
      * Get all members
+     * @throws Exception if no members were found
      * @return MemberModel[]
      */
     public function selectAll()
@@ -114,7 +116,7 @@ class MemberStorageModel
 
         // Error handling
         if (! $result) {
-            throw new Exception('Member not found');
+            throw new Exception('No members were found');
         }
 
         // Create objects

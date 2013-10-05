@@ -76,6 +76,7 @@ class BoatStorageModel
     /**
      * Get a boat object by its ID
      * @param  int $id
+     * @throws Exception if no boat with the param id was found
      * @return BoatModel
      */
     public function select($id)
@@ -104,6 +105,7 @@ class BoatStorageModel
     /**
      * Get all boats belonging to a member
      * @param int $memberId
+     * @throws Exception if no boats belonging to the param memberId was found
      * @return BoatModel[]
      */
     public function selectByMember($memberId)
