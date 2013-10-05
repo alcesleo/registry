@@ -8,6 +8,8 @@ use Registry\Views\CompactMemberListView;
 use Registry\Views\SingleMemberView;
 use Registry\Views\SelectMemberView;
 use Registry\Models\MemberModel;
+use Registry\Models\ServiceModel;
+use PDO;
 
 class MasterController
 {
@@ -15,6 +17,11 @@ class MasterController
     private $options;
 
     private $view;
+
+    /**
+     * @var Registry\Models\ServiceModel $serviceModel
+     */
+    private $serviceModel;
 
     public function __construct()
     {
@@ -26,6 +33,9 @@ class MasterController
             's' => 'Select member',
             'q' => 'Exit application'
         );
+
+        $db = new PDO('sqlite:database/registry.sqlite');
+        $this->serviceModel = new ServiceModel($db);
 
         $this->view = new MenuView($this->options, "-----------\n Main menu \n-----------");
     }
@@ -45,7 +55,7 @@ class MasterController
     {
         switch ($option) {
             case 'l':
-                $compactMemberListView = new CompactMemberListView();
+                $compactMemberListView = new CompactMemberListView($this->serviceModel);
                 $compactMemberListView->printMemberData();
                 break;
             case 'L':
@@ -55,13 +65,13 @@ class MasterController
                 print 'Register';
                 break;
             case 'e':
-                $selectMemberView = new SelectMemberView();
+                $selectMemberView = new SelectMemberView($this->serviceModel);
                 $member = $selectMemberView->getSelectedMember();
                 print 'Edit';
                 break;
             case 's':
-                $selectMemberView = new SelectMemberView();
-                $singleMemberView = new SingleMemberView();
+                $selectMemberView = new SelectMemberView($this->serviceModel);
+                $singleMemberView = new SingleMemberView($this->serviceModel);
 
                 // Get the user you want to display/change/etc
                 $member = $selectMemberView->getSelectedMember();

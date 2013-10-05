@@ -5,28 +5,23 @@ namespace Registry\Views;
 use Registry\Views\MenuView;
 
 use Registry\Models\MemberModel;
-use Registry\Models\ServiceModel;
-
-use PDO;
 
 class SelectMemberView
 {
     /**
-     * @var ServiceModel $service
+     * @var ServiceModel $serviceModel
      * @var Array of MemberModel $memberModelArray
      */
-    private $service;
+    private $serviceModel;
     private $memberModelArray;
 
-
-    public function __construct()
+    /**
+     * @param ServiceModelObject $serviceModel 
+     */
+    public function __construct(\Registry\Models\ServiceModel $serviceModel)
     {
-        // Create databse and start service
-        // TODO: This should not be handled in a view
-        $db = new PDO('sqlite:database/registry.sqlite');
-        $this->service = new ServiceModel($db);
-        $this->memberModelArray = $this->service->getMembers();
-
+        $this->serviceModel = $serviceModel;
+        $this->memberModelArray = $this->serviceModel->getMembers();
     }
 
     /**

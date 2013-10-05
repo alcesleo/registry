@@ -3,31 +3,25 @@
 namespace Registry\Views;
 
 use Registry\Models\MemberModel;
-use Registry\Models\ServiceModel;
-
-use PDO;
 
 class CompactMemberListView
 {
     /**
      * @var array $membersArray of MemberModel
-     * @var ServiceModel $service
+     * @var ServiceModel $serviceModel
      */
     private $memberModelArray;
-    private $service;
+    private $serviceModel;
 
     /**
-     * @var PDO $db
+     * @param \Registry\Models\ServiceModel $serviceModel 
      */
-    public function __construct()
-    {
-        // Create databse and start service
-        $db = new PDO('sqlite:database/registry.sqlite');
-        $this->service = new ServiceModel($db);
-        
+    public function __construct(\Registry\Models\ServiceModel $serviceModel)
+    {        
+        $this->serviceModel = $serviceModel;
         // TODO: Change the call to getAllMembersWithBoats after its been implemented. 
         //$this->memberModelArray = $this->service->getAllMembersWithBoats();
-        $this->memberModelArray = $this->service->getMembers();
+        $this->memberModelArray = $this->serviceModel->getMembers();
     }
     
     /**
@@ -37,7 +31,7 @@ class CompactMemberListView
      */
     public function printMemberData()
     {
-        print "     \n ----- Member list -----\n\n";
+        print "\n ----- Member list -----\n\n";
         
         // http://stackoverflow.com/questions/7039010/how-to-make-alignment-on-console-in-php
         $pattern = "|%-3s |%-25s |%-11s |%-12s |\n";
