@@ -25,22 +25,9 @@ class RegisterMemberView extends CommandLineView
      */
     public function setMemberSSN($name)
     {
-        $input = $this->readLine("Enter SSN for ".$name.": ");
+        $input = $this->readLine("\n\nEnter SSN for ".$name.": ");
         
-        $member = $this->createNewMember($name, $input);
-        
-        return $member;
-    }
-    
-    /**
-     * @param string $name
-     * @param int $ssn
-     * @var MemberModel $member
-     */
-    public function createNewMember($name, $ssn) {
-        $member = new MemberModel(null, $name, $ssn);
-        
-        return $member;
+        return $input;
     }
 }
     

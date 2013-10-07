@@ -66,10 +66,40 @@ class MasterController
                 $fullMemberListView->printFullMemberList();
                 break;
             case 'r':
+                // TODO: I think maybe this should be an own controller
+                // A lot of validation logic here messing up the nice overview of whats happening. / EL
+
                 $registerMemberView = new RegisterMemberView();
-                $newMemberName = $registerMemberView->setMemberName();
-                $newMember = $registerMemberView->setMemberSSN($newMemberName);
-                $this->serviceModel->addMember($newMember);
+
+                // Let the user re-enter the name until they get it correct
+                do {
+                    $newMemberName = $registerMemberView->setMemberName();
+                    if ($newMemberName == "") {
+                        $noValidName = true;
+                        print "Name cannot be blank"; // TODO: should not be in controller...? 
+                    } else {
+                        $noValidName = false;
+                    }
+                } while ($noValidName);
+
+                // TODO: SSN should have more validation!
+                do {
+                    $newMemberSSN = $registerMemberView->setMemberSSN($newMemberName);
+                    if ($newMemberSSN == "") {
+                        $noValidSSN = true;
+                        print "SSN cannot be blank"; // TODO: should not be in controller...? 
+                    } else {
+                        $noValidSSN = false;
+                    }
+                } while ($noValidSSN);
+
+                try {
+                    $newMember = new MemberModel(null, $newMemberName, $newMemberSSN);
+                    $this->serviceModel->addMember($newMember);
+                } catch (Exception $ex) {
+                    // You should normally never get to this catch as we have validated the user data in the do-while's above. 
+                    print ("Something went wrong: " . $ex.getMessage()); 
+                }
                 break;
             case 'e':
                 $selectMemberView = new SelectMemberView($this->serviceModel);
