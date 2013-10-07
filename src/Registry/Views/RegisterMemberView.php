@@ -10,7 +10,7 @@ class RegisterMemberView extends CommandLineView
 
     /**
      * @var string $input [readLine()]
-     * TODO: Felhantering
+     * TODO: Felhantering i samtliga "set" metoder
      */
     public function setMemberName()
     {
@@ -18,6 +18,11 @@ class RegisterMemberView extends CommandLineView
         return $input;
     }
     
+     /**
+     * @param string $name
+     * @var string $input
+     * @var MemberModel $member
+     */
     public function setMemberSSN($name)
     {
         $input = $this->readLine("Enter SSN for ".$name.": ");
@@ -27,6 +32,11 @@ class RegisterMemberView extends CommandLineView
         return $member;
     }
     
+    /**
+     * @param string $name
+     * @param int $ssn
+     * @var MemberModel $member
+     */
     public function createNewMember($name, $ssn) {
         $member = new MemberModel(null, $name, $ssn);
         
