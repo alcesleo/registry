@@ -26,8 +26,7 @@ class FullMemberListView
     {
         print "\n ----- Full member list -----\n\n";
 
-        foreach ($this->memberModelArray as $obj)
-        {
+        foreach ($this->memberModelArray as $obj) {
             $memberID = $obj->getMemberID();
             $name = $obj->getName();
             $ssn = $obj->getSocialSecurityNumber();
@@ -44,8 +43,7 @@ class FullMemberListView
                 $pattern = "\t|%-3s |%-9s |%-6s |\n"; // Used in boat table for each member
 
                 printf($pattern, "ID", "Boat type", "Length"); // Table header
-                foreach ($boats as $boat)
-                {
+                foreach ($boats as $boat) {
                     $boatID = $boat->getBoatID();
                     $boatType = $boat->getBoatType(); // TODO: "Translate" the int to the type name??
                     $boatLength = $boat->getLength();
