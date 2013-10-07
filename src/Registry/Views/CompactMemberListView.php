@@ -3,31 +3,22 @@
 namespace Registry\Views;
 
 use Registry\Models\MemberModel;
-use Registry\Models\ServiceModel;
 
 class CompactMemberListView
 {
     /**
      * @var array $membersArray of MemberModel
-     * @var ServiceModel $serviceModel
      */
     private $memberModelArray;
-    private $serviceModel;
 
     /**
-     * @param ServiceModel $serviceModel
+     * @param array $membersArray of MemberModel $memberModelArray
      */
-    public function __construct(ServiceModel $serviceModel)
+    public function __construct($memberModelArray)
     {
-        $this->serviceModel = $serviceModel;
-        $this->memberModelArray = $this->serviceModel->getMembersWithBoats();
+        $this->memberModelArray = $memberModelArray;
     }
 
-    /**
-     * @var int $memberID
-     * @var string $name
-     * @var string $ssn
-     */
     public function printMemberData()
     {
         print "\n ----- Member list -----\n\n";

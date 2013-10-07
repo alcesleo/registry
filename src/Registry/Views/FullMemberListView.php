@@ -8,18 +8,15 @@ class FullMemberListView
 {
     /**
      * @var array $membersArray of MemberModel
-     * @var ServiceModel $serviceModel
      */
     private $memberModelArray;
-    private $serviceModel;
 
     /**
-     * @param \Registry\Models\ServiceModel $serviceModel
+     * @param array $membersArray of MemberModel
      */
-    public function __construct(\Registry\Models\ServiceModel $serviceModel)
+    public function __construct($memberModelArray)
     {
-        $this->serviceModel = $serviceModel;
-        $this->memberModelArray = $this->serviceModel->getMembersWithBoats();
+        $this->memberModelArray = $memberModelArray;
     }
 
     public function printFullMemberList()

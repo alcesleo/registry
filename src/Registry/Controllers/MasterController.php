@@ -59,11 +59,13 @@ class MasterController
     {
         switch ($option) {
             case 'l':
-                $compactMemberListView = new CompactMemberListView($this->serviceModel);
+                $memberModelArray = $this->serviceModel->getMembersWithBoats();
+                $compactMemberListView = new CompactMemberListView($memberModelArray);
                 $compactMemberListView->printMemberData();
                 break;
             case 'L':
-                $fullMemberListView = new FullMemberListView($this->serviceModel);
+                $memberModelArray = $this->serviceModel->getMembersWithBoats();
+                $fullMemberListView = new FullMemberListView($memberModelArray);
                 $fullMemberListView->printFullMemberList();
                 break;
             case 'r':
@@ -103,15 +105,17 @@ class MasterController
                 }
                 break;
             case 'e':
-                $selectMemberView = new SelectMemberView($this->serviceModel);
+                $memberArray = $this->serviceModel->getMembers();
+                $selectMemberView = new SelectMemberView($memberArray);
                 $editMemberView = new EditMemberView();
                 $member = $selectMemberView->getSelectedMember();
                 $altMember = $editMemberView->changeMemberData($member);
                 $this->serviceModel->changeMember($altMember);
                 break;
             case 's':
-                $selectMemberView = new SelectMemberView($this->serviceModel);
-                $singleMemberView = new SingleMemberView($this->serviceModel);
+                $memberModelArray = $this->serviceModel->getMembers();
+                $selectMemberView = new SelectMemberView($memberModelArray);
+                $singleMemberView = new SingleMemberView();
 
                 // Get the user you want to display/change/etc
                 $member = $selectMemberView->getSelectedMember();

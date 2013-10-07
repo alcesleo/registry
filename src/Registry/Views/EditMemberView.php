@@ -8,9 +8,6 @@ use Registry\Models\MemberModel;
 class EditMemberView extends CommandLineView
 {
     /**
-     * @var array of string $option
-     * @var MenuView $menuView
-     * @var string $action
      * @return string action
      */
     public function selectChange() {
@@ -29,8 +26,6 @@ class EditMemberView extends CommandLineView
     /**
      * @param MemberModel $member
      * @return MemberModel $member
-     * @var string $action
-     * @var string $input
      */
     public function changeMemberData($member) {
         $action = $this->selectChange();

@@ -3,31 +3,24 @@
 namespace Registry\Views;
 
 use Registry\Views\MenuView;
-use Registry\Models\ServiceModel;
 use Registry\Models\MemberModel;
 
 class SelectMemberView
 {
     /**
-     * @var ServiceModel $serviceModel
      * @var Array of MemberModel $memberModelArray
      */
-    private $serviceModel;
     private $memberModelArray;
 
     /**
-     * @param ServiceModel $serviceModel
+     * @param 
      */
-    public function __construct(ServiceModel $serviceModel)
+    public function __construct($memberModelArray)
     {
-        $this->serviceModel = $serviceModel;
-        $this->memberModelArray = $this->serviceModel->getMembers();
+        $this->memberModelArray = $memberModelArray;
     }
 
     /**
-     * @var array $menuArray
-     * @var MenuView $menu
-     * @var memberModel $member
      * @return memberModel $member
      */
     public function getSelectedMember()

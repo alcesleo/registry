@@ -8,9 +8,6 @@ class SingleMemberView
 {
     /**
      * @param MemberModel $member
-     * @var int $memberID
-     * @var string $name
-     * @var string $ssn
      */
     public function printMemberData(MemberModel $member)
     {
