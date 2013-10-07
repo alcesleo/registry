@@ -8,6 +8,7 @@ use Registry\Views\CompactMemberListView;
 use Registry\Views\FullMemberListView;
 use Registry\Views\SingleMemberView;
 use Registry\Views\SelectMemberView;
+use Registry\Views\EditMemberView;
 use Registry\Views\RegisterMemberView;
 use Registry\Models\MemberModel;
 use Registry\Models\ServiceModel;
@@ -72,8 +73,10 @@ class MasterController
                 break;
             case 'e':
                 $selectMemberView = new SelectMemberView($this->serviceModel);
+                $editMemberView = new EditMemberView();
                 $member = $selectMemberView->getSelectedMember();
-                print 'Edit';
+                $altMember = $editMemberView->changeMemberData($member);
+                $this->serviceModel->changeMember($altMember);
                 break;
             case 's':
                 $selectMemberView = new SelectMemberView($this->serviceModel);
