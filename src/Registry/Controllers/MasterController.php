@@ -13,6 +13,7 @@ use Registry\Views\RegisterMemberView;
 use Registry\Models\MemberModel;
 use Registry\Models\ServiceModel;
 use PDO;
+use Exception;
 
 class MasterController
 {
@@ -98,7 +99,7 @@ class MasterController
                     $this->serviceModel->addMember($newMember);
                 } catch (Exception $ex) {
                     // You should normally never get to this catch as we have validated the user data in the do-while's above. 
-                    print ("Something went wrong: " . $ex.getMessage()); 
+                    print ("Something went wrong: " . $ex->getMessage()); 
                 }
                 break;
             case 'e':
