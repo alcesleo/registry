@@ -9,7 +9,7 @@ class CommandLineView
      * @param string $prompt
      * @return string entered line
      */
-    public function readLine($prompt = '')
+    public function readLine($prompt = 'Select: ')
     {
         print $prompt;
         return trim(fread(STDIN, 80));
