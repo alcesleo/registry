@@ -8,6 +8,7 @@ use Registry\Views\CompactMemberListView;
 use Registry\Views\FullMemberListView;
 use Registry\Views\SingleMemberView;
 use Registry\Views\SelectMemberView;
+use Registry\Views\RegisterMemberView;
 use Registry\Models\MemberModel;
 use Registry\Models\ServiceModel;
 use PDO;
@@ -64,7 +65,9 @@ class MasterController
                 $fullMemberListView->printFullMemberList();
                 break;
             case 'r':
-                print 'Register';
+                $registerMemberView = new RegisterMemberView();
+                $newMemberName = $registerMemberView->setMemberName();
+                $newMember = $registerMemberView->setMemberSSN($newMemberName);
                 break;
             case 'e':
                 $selectMemberView = new SelectMemberView($this->serviceModel);

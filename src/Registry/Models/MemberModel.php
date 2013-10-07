@@ -38,7 +38,7 @@ class MemberModel
 
     public function setMemberID($memberID)
     {
-        if (!is_numeric($memberID)) {
+        if (!is_numeric($memberID) and !is_null($memberID)) {
             throw new \Exception("MemberID must be numeric");
         }
         $this->memberID = $memberID;
