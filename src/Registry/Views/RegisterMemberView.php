@@ -14,7 +14,7 @@ class RegisterMemberView extends CommandLineView
      */
     public function setMemberName()
     {
-        $input = $this->readLine("Enter members Name: ");
+        $input = $this->readLine("\n\nEnter members Name: ");
         return $input;
     }
     

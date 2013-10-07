@@ -68,6 +68,7 @@ class MasterController
                 $registerMemberView = new RegisterMemberView();
                 $newMemberName = $registerMemberView->setMemberName();
                 $newMember = $registerMemberView->setMemberSSN($newMemberName);
+                $this->serviceModel->addMember($newMember);
                 break;
             case 'e':
                 $selectMemberView = new SelectMemberView($this->serviceModel);
