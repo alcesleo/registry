@@ -70,7 +70,7 @@ class ServiceModel
     /**
      * Convenience function for getting a member by id, and her owned boats
      * @param  int $memberId
-     * @return MemberObject with reference to her boats
+     * @return MemberModel with reference to her boats
      */
     public function getMemberWithBoats($memberId)
     {
@@ -80,7 +80,23 @@ class ServiceModel
         return $member;
     }
 
-    // TODO: Implement getAllMembersWithBoats()
+    /**
+     * Convenience method for getting all members with their associated boats
+     * @return MemberModel[] with references to boats
+     */
+    public function getMembersWithBoats()
+    {
+        // Get list of members
+        $members = $this->getMembers();
+
+        // Attach boats
+        foreach ($members as $member) {
+            $boats = $this->getBoats($member);
+            $member->setOwnedBoats($boats);
+        }
+
+        return $members;
+    }
 
     /**
      * Changes the properties of a member based on its memberId (which will not be changed)
