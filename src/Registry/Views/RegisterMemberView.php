@@ -9,7 +9,7 @@ class RegisterMemberView extends CommandLineView
 {   
 
     /**
-     * @var string $input [readLine()]
+     * @return string $input
      * TODO: Felhantering i samtliga "set" metoder
      */
     public function setMemberName()
@@ -20,8 +20,7 @@ class RegisterMemberView extends CommandLineView
     
      /**
      * @param string $name
-     * @var string $input
-     * @var MemberModel $member
+     * @return string $input
      */
     public function setMemberSSN($name)
     {

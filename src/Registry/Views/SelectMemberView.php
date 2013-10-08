@@ -13,7 +13,7 @@ class SelectMemberView
     private $memberModelArray;
 
     /**
-     * @param 
+     * @param array of MemberModel $memberModelArray
      */
     public function __construct($memberModelArray)
     {
