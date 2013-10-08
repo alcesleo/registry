@@ -9,6 +9,7 @@ use Registry\Views\FullMemberListView;
 use Registry\Views\SingleMemberView;
 use Registry\Views\SelectMemberView;
 use Registry\Views\EditMemberView;
+use Registry\Views\DeleteMemberView;
 use Registry\Views\RegisterMemberView;
 use Registry\Models\MemberModel;
 use Registry\Models\ServiceModel;
@@ -34,7 +35,8 @@ class MasterController
             'L' => 'List all members (long)',
             'r' => 'Register new member',
             'e' => 'Edit member',
-            's' => 'Select member',
+            'd' => 'Delete member',
+            's' => 'Select single member',
             'q' => 'Exit application'
         );
 
@@ -111,6 +113,26 @@ class MasterController
                 $member = $selectMemberView->getSelectedMember();
                 $altMember = $editMemberView->changeMemberData($member);
                 $this->serviceModel->changeMember($altMember);
+                break;
+            case 'd':
+                $memberModelArray = $this->serviceModel->getMembers();
+                $selectMemberView = new SelectMemberView($memberModelArray);
+                $deleteMemberView = new DeleteMemberView();
+
+                // Get the user you want to delete
+                $member = $selectMemberView->getSelectedMember();
+                
+                // do you realy want to delete this member
+                $confirm = $deleteMemberView->userWantsToDeleteMember($member);
+                
+                //Delete or spare the member
+                if($confirm) {
+                    $this->serviceModel->removeMember($member);
+                    $deleteMemberView->memberDeleted();
+                }
+                else {
+                    $deleteMemberView->memberNotDeleted();
+                }
                 break;
             case 's':
                 $memberModelArray = $this->serviceModel->getMembers();
