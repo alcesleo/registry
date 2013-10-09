@@ -109,9 +109,6 @@ class MasterController
     // FIXME: Temporary function, might be moved
     private function registerMember()
     {
-        // TODO: I think maybe this should be an own controller
-        // A lot of validation logic here messing up the nice overview of whats happening. / EL
-
         $registerMemberView = new RegisterMemberView();
 
         // Get member name
@@ -121,12 +118,11 @@ class MasterController
         // TODO: SSN should have more validation!
         $newMemberSSN = $registerMemberView->getMemberSSN($newMemberName);
 
-
+        // Create and save the member
         try {
             $newMember = new MemberModel(null, $newMemberName, $newMemberSSN);
             $this->serviceModel->addMember($newMember);
         } catch (Exception $ex) {
-            // You should normally never get to this catch as we have validated the user data in the do-while's above.
             print ("Something went wrong: " . $ex->getMessage());
         }
     }
