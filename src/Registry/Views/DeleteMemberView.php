@@ -8,7 +8,7 @@ class DeleteMemberView extends CommandLineView
 {
     /**
      * @param MemberModel $member
-     * @return Boolean
+     * @return bool
      */
     public function userWantsToDeleteMember(MemberModel $member)
     {
@@ -27,12 +27,18 @@ class DeleteMemberView extends CommandLineView
         return ($input == 'y');
     }
 
-    public function memberDeleted()
+    /**
+     * Success-message
+     */
+    public function showMemberDeleted()
     {
         print "\n\nMember was successfully deleted!\n";
     }
 
-    public function memberNotDeleted()
+    /**
+     * Aborted message
+     */
+    public function showMemberNotDeleted()
     {
         print "\n\nMember was not deleted!\n";
     }
