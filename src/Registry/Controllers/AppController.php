@@ -41,6 +41,7 @@ class AppController
             'e' => 'Edit member',
             'd' => 'Delete member',
             's' => 'Select single member',
+            'b' => 'Handle boats',
             'q' => 'Exit application'
         );
 
@@ -86,10 +87,18 @@ class AppController
             case 's':
                 $this->selectMember();
                 break;
+            case 's':
+                $this->showBoatMenu();
+                break;
             case 'q':
                 $this->quitApplication();
                 break;
         }
+    }
+    
+    private function showBoatMenu() 
+    {
+        //Code here
     }
 
     /**
