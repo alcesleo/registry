@@ -1,7 +1,5 @@
 ## Things that should be done
 
-- Edit the dataBaseExample to reflect chanes in BoatTypeModel
-
 ## Artifacts remaining
 
 1. Båtregistrering
@@ -17,3 +15,4 @@
 ## Jimmy B
 
 - Edit type hints to new BoatTypeModel in service and storage-models
+- Edit the dataBaseExample to reflect chanes in BoatTypeModel
