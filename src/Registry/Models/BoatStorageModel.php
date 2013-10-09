@@ -174,6 +174,7 @@ class BoatStorageModel
         $stmt->bindValue(':boatType', $boat->getBoatType()->getTypeID(), PDO::PARAM_INT);
         $stmt->bindValue(':boatLength', $boat->getLength(), PDO::PARAM_STR); // There is no PARAM_FLOAT :(
 
+        // TODO: Return boat-object with autoincremented ID
         return $stmt->execute();
     }
 
