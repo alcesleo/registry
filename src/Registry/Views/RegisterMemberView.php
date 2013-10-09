@@ -9,23 +9,33 @@ class RegisterMemberView extends CommandLineView
 {
 
     /**
-     * @return string $input
-     * TODO: Felhantering i samtliga "get" metoder
+     * @return string
      */
     public function getMemberName()
     {
-        $input = $this->readLine("\n\nEnter members Name: ");
-        return $input;
+        while (true) {
+            $input = $this->readLine("\n\nEnter members Name: ");
+            if ($input == "") {
+                print "Name cannot be blank";
+            } else {
+                return $input;
+            }
+        }
     }
 
-     /**
+    /**
      * @param string $name
-     * @return string $input
+     * @return string
      */
     public function getMemberSSN($name)
     {
-        $input = $this->readLine("\n\nEnter SSN for ".$name.": ");
-
-        return $input;
+        while (true) {
+            $input = $this->readLine("\n\nEnter SSN for ".$name.": ");
+            if ($input == "") {
+                print "SSN cannot be blank";
+            } else {
+                return $input;
+            }
+        }
     }
 }
