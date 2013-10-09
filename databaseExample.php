@@ -58,7 +58,7 @@ $allMembers = $service->getMembers();
 // Add boats
 $sailBoat = new BoatModel(1, BoatType::SAILBOAT, 7.5);
 $motorBoat = new BoatModel(2, BoatType::MOTORBOAT, 5);
-$canoe = new BoatModel(3, BoatType::CANOE, 3);
+$canoe = new BoatModel(3, BoatType::Canoe(), 3); // BoatModel can handle both of these methods of choosing BoatType
 $service->addBoat($sailBoat, $cersei); // Both belong to Cersei
 $service->addBoat($motorBoat, $cersei);
 $service->addBoat($canoe); // This one has no owner
