@@ -33,6 +33,7 @@ class MasterController
 
     public function __construct()
     {
+        // TODO: Break out to view
         $this->options = array(
             'l' => 'List all members',
             'L' => 'List all members (long)',
@@ -113,27 +114,13 @@ class MasterController
 
         $registerMemberView = new RegisterMemberView();
 
-        // Let the user re-enter the name until they get it correct
-        do {
-            $newMemberName = $registerMemberView->setMemberName();
-            if ($newMemberName == "") {
-                $noValidName = true;
-                print "Name cannot be blank"; // TODO: should not be in controller...?
-            } else {
-                $noValidName = false;
-            }
-        } while ($noValidName);
+        // Get member name
+        $newMemberName = $registerMemberView->getMemberName();
 
+        // Get social security number
         // TODO: SSN should have more validation!
-        do {
-            $newMemberSSN = $registerMemberView->setMemberSSN($newMemberName);
-            if ($newMemberSSN == "") {
-                $noValidSSN = true;
-                print "SSN cannot be blank"; // TODO: should not be in controller...?
-            } else {
-                $noValidSSN = false;
-            }
-        } while ($noValidSSN);
+        $newMemberSSN = $registerMemberView->getMemberSSN($newMemberName);
+
 
         try {
             $newMember = new MemberModel(null, $newMemberName, $newMemberSSN);
