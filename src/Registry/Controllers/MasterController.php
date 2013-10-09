@@ -71,87 +71,22 @@ class MasterController
                 $this->showCompactList();
                 break;
             case 'L':
-                $memberModelArray = $this->serviceModel->getMembersWithBoats();
-                $fullMemberListView = new FullMemberListView($memberModelArray);
-                $fullMemberListView->printFullMemberList();
+                $this->showLongList();
                 break;
             case 'r':
-                // TODO: I think maybe this should be an own controller
-                // A lot of validation logic here messing up the nice overview of whats happening. / EL
-
-                $registerMemberView = new RegisterMemberView();
-
-                // Let the user re-enter the name until they get it correct
-                do {
-                    $newMemberName = $registerMemberView->setMemberName();
-                    if ($newMemberName == "") {
-                        $noValidName = true;
-                        print "Name cannot be blank"; // TODO: should not be in controller...?
-                    } else {
-                        $noValidName = false;
-                    }
-                } while ($noValidName);
-
-                // TODO: SSN should have more validation!
-                do {
-                    $newMemberSSN = $registerMemberView->setMemberSSN($newMemberName);
-                    if ($newMemberSSN == "") {
-                        $noValidSSN = true;
-                        print "SSN cannot be blank"; // TODO: should not be in controller...?
-                    } else {
-                        $noValidSSN = false;
-                    }
-                } while ($noValidSSN);
-
-                try {
-                    $newMember = new MemberModel(null, $newMemberName, $newMemberSSN);
-                    $this->serviceModel->addMember($newMember);
-                } catch (Exception $ex) {
-                    // You should normally never get to this catch as we have validated the user data in the do-while's above.
-                    print ("Something went wrong: " . $ex->getMessage());
-                }
+                $this->registerMember();
                 break;
             case 'e':
-                $memberArray = $this->serviceModel->getMembers();
-                $selectMemberView = new SelectMemberView($memberArray);
-                $editMemberView = new EditMemberView();
-                $member = $selectMemberView->getSelectedMember();
-                $altMember = $editMemberView->changeMemberData($member);
-                $this->serviceModel->changeMember($altMember);
+                $this->editMember();
                 break;
             case 'd':
-                $memberModelArray = $this->serviceModel->getMembers();
-                $selectMemberView = new SelectMemberView($memberModelArray);
-                $deleteMemberView = new DeleteMemberView();
-
-                // Get the user you want to delete
-                $member = $selectMemberView->getSelectedMember();
-
-                // do you realy want to delete this member
-                $confirm = $deleteMemberView->userWantsToDeleteMember($member);
-
-                //Delete or spare the member
-                if($confirm) {
-                    $this->serviceModel->removeMember($member);
-                    $deleteMemberView->memberDeleted();
-                }
-                else {
-                    $deleteMemberView->memberNotDeleted();
-                }
+                $this->deleteMember();
                 break;
             case 's':
-                $memberModelArray = $this->serviceModel->getMembers();
-                $selectMemberView = new SelectMemberView($memberModelArray);
-                $singleMemberView = new SingleMemberView();
-
-                // Get the user you want to display/change/etc
-                $member = $selectMemberView->getSelectedMember();
-
-                $singleMemberView->printMemberData($member);
+                $this->selectMember();
                 break;
             case 'q':
-                print 'Bye bye!'; // Should be in view
-                exit(0);
+                $this->quitApplication();
                 break;
         }
     }
@@ -161,5 +96,110 @@ class MasterController
         $memberModelArray = $this->serviceModel->getMembersWithBoats();
         $compactMemberListView = new CompactMemberListView($memberModelArray);
         $compactMemberListView->printMemberData();
+    }
+
+    private function showLongList()
+    {
+        $memberModelArray = $this->serviceModel->getMembersWithBoats();
+        $fullMemberListView = new FullMemberListView($memberModelArray);
+        $fullMemberListView->printFullMemberList();
+    }
+
+    // FIXME: Temporary function, might be moved
+    private function registerMember()
+    {
+        // TODO: I think maybe this should be an own controller
+        // A lot of validation logic here messing up the nice overview of whats happening. / EL
+
+        $registerMemberView = new RegisterMemberView();
+
+        // Let the user re-enter the name until they get it correct
+        do {
+            $newMemberName = $registerMemberView->setMemberName();
+            if ($newMemberName == "") {
+                $noValidName = true;
+                print "Name cannot be blank"; // TODO: should not be in controller...?
+            } else {
+                $noValidName = false;
+            }
+        } while ($noValidName);
+
+        // TODO: SSN should have more validation!
+        do {
+            $newMemberSSN = $registerMemberView->setMemberSSN($newMemberName);
+            if ($newMemberSSN == "") {
+                $noValidSSN = true;
+                print "SSN cannot be blank"; // TODO: should not be in controller...?
+            } else {
+                $noValidSSN = false;
+            }
+        } while ($noValidSSN);
+
+        try {
+            $newMember = new MemberModel(null, $newMemberName, $newMemberSSN);
+            $this->serviceModel->addMember($newMember);
+        } catch (Exception $ex) {
+            // You should normally never get to this catch as we have validated the user data in the do-while's above.
+            print ("Something went wrong: " . $ex->getMessage());
+        }
+    }
+
+    private function editMember()
+    {
+        $memberArray = $this->serviceModel->getMembers();
+        $selectMemberView = new SelectMemberView($memberArray);
+        $editMemberView = new EditMemberView();
+        $member = $selectMemberView->getSelectedMember();
+        $altMember = $editMemberView->changeMemberData($member);
+        $this->serviceModel->changeMember($altMember);
+    }
+
+    private function deleteMember()
+    {
+        $memberModelArray = $this->serviceModel->getMembers();
+        $selectMemberView = new SelectMemberView($memberModelArray);
+        $deleteMemberView = new DeleteMemberView();
+
+        // Get the user you want to delete
+        $member = $selectMemberView->getSelectedMember();
+
+        // do you realy want to delete this member
+        $confirm = $deleteMemberView->userWantsToDeleteMember($member);
+
+        //Delete or spare the member
+        // FIXME: Code duplication
+        if ($confirm) {
+            $this->serviceModel->removeMember($member);
+            $deleteMemberView->memberDeleted();
+        } else {
+            $deleteMemberView->memberNotDeleted();
+        }
+    }
+
+    private function selectMember()
+    {
+        $memberModelArray = $this->serviceModel->getMembers();
+        $selectMemberView = new SelectMemberView($memberModelArray);
+        $deleteMemberView = new DeleteMemberView();
+
+        // Get the user you want to delete
+        $member = $selectMemberView->getSelectedMember();
+
+        // do you realy want to delete this member
+        $confirm = $deleteMemberView->userWantsToDeleteMember($member);
+
+        //Delete or spare the member
+        // FIXME: Code duplication
+        if ($confirm) {
+            $this->serviceModel->removeMember($member);
+            $deleteMemberView->memberDeleted();
+        } else {
+            $deleteMemberView->memberNotDeleted();
+        }
+    }
+    private function quitApplication()
+    {
+        print 'Bye bye!'; // Should be in view
+        exit(0);
     }
 }
