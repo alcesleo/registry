@@ -6,7 +6,7 @@ class BoatModel
 {
     /**
      * @var int $boatID
-     * @var int $boatType
+     * @var BoatTypeModel $boatType
      * @var float $length in metres
      */
     private $boatID;
@@ -16,14 +16,23 @@ class BoatModel
     /**
      * Constructor
      * @param int $boatID
-     * @param BoatTypeModel $boatType
+     * @param int|BoatTypeModel $boatType
      * @param float $length
      */
-    public function __construct($boatID, BoatTypeModel $boatType, $length)
+    public function __construct($boatID, $boatType, $length)
     {
         $this->setBoatID($boatID);
-        $this->setBoatType($boatType);
         $this->setLength($length);
+
+        // Set boat-type depending on parameter type
+        // NOTE: Sort of a hack - this way we don't have to change the type in every other file.
+        if (is_int($boatType)) {
+            $this->setBoatTypeByID($boatType);
+        } elseif ($boatType instanceof BoatTypeModel) {
+            $this->setBoatType($boatType);
+        } else {
+            throw new Exception('Not a valid BoatType');
+        }
     }
 
     /**
@@ -44,6 +53,15 @@ class BoatModel
     {
         //Validation here
         $this->boatType = $boatType;
+    }
+
+    /**
+     * @param int $boatTypeId
+     * @throws Exception If boatTypeId is not a valid boat-type
+     */
+    public function setBoatTypeByID($boatTypeId)
+    {
+        $this->boatType = new BoatTypeModel($boatTypeId);
     }
 
     /**
