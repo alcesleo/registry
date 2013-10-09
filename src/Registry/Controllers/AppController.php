@@ -102,6 +102,11 @@ class AppController
         $boatMenuView = new BoatMenuView();
         $option = $boatMenuView->getMenuOption();
         
+        $this->doBoatAction($option);
+    }
+    
+    private function doBoatAction($option)
+    {
         switch ($option) {
             case 'a':
                 echo "Add";
