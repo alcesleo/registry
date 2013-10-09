@@ -1,8 +1,9 @@
 #!/usr/bin/env php -q
 <?php
+require('./config.php');
 require('./vendor/autoload.php');
 
-use Registry\Controllers\MasterController;
+use Registry\Controllers\AppController;
 
-$ctrl = new MasterController();
-$ctrl->run();
+$app = new AppController();
+$app->run();

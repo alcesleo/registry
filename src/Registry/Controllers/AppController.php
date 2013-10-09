@@ -16,7 +16,7 @@ use Registry\Models\ServiceModel;
 use PDO;
 use Exception;
 
-class MasterController
+class AppController
 {
     // TODO: This should probably be in a view
     private $options;
