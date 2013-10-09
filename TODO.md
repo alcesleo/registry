@@ -9,8 +9,6 @@
 5. Körinstruktioner
 6. Klassdiagram
 7. Sekvensdiagram
-8. Delete member - DONE
-9. Båttyp
 
 ## Jimmy B
 
