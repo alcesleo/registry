@@ -109,11 +109,14 @@ class ServiceModel
     }
 
     /**
+     * Removes a member with all her associated boats
      * @param  MemberModel $member
      * @return bool
      */
     public function removeMember(MemberModel $member)
     {
+        // NOTE: Should roll-back on fail - way out of scope for this project
+        $this->removeBoatsForMember($member);
         return $this->members->delete($member->getMemberID());
     }
 
@@ -181,5 +184,15 @@ class ServiceModel
     public function removeBoat(BoatModel $boat)
     {
         return $this->boats->delete($boat->getBoatID());
+    }
+
+    /**
+     * Remove all boats of a member
+     * @param  MemberModel $member
+     * @return bool
+     */
+    public function removeBoatsForMember(MemberModel $member)
+    {
+        return $this->boats->deleteForMember($member->getMemberID());
     }
 }
