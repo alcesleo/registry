@@ -5,9 +5,9 @@ namespace Registry\Models;
 class BoatModel
 {
     /**
-     * @var Int $boatID
-     * @var Int $boatType
-     * @var Float $length in metres
+     * @var int $boatID
+     * @var int $boatType
+     * @var float $length in metres
      */
     private $boatID;
     private $boatType;
@@ -15,9 +15,9 @@ class BoatModel
 
     /**
      * Constructor
-     * @param Int $boatID
-     * @param Int $boatType
-     * @param Float $length
+     * @param int $boatID
+     * @param int $boatType
+     * @param float $length
      */
     public function __construct($boatID, $boatType, $length)
     {
@@ -27,7 +27,7 @@ class BoatModel
     }
 
     /**
-     * @param Int $boatID
+     * @param int $boatID
      */
     public function setBoatID($boatID)
     {
@@ -44,7 +44,7 @@ class BoatModel
     }
 
     /**
-     * @param Float $length
+     * @param float $length
      */
     public function setLength($length)
     {
@@ -55,7 +55,7 @@ class BoatModel
     }
 
     /**
-     * @return Int
+     * @return int
      */
     public function getBoatID()
     {
@@ -71,7 +71,7 @@ class BoatModel
     }
 
     /**
-     * @return Float
+     * @return float
      */
     public function getLength()
     {
