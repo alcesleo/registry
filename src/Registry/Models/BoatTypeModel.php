@@ -94,6 +94,6 @@ class BoatTypeModel
      */
     public function __toString()
     {
-        return self::$strings[$this->boatType];
+        return self::$strings[$this->boatTypeId];
     }
 }
