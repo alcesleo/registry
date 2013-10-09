@@ -18,13 +18,16 @@ use Exception;
 
 class MasterController
 {
-    // TODO This should probably be in a view
+    // TODO: This should probably be in a view
     private $options;
 
+    /**
+     * @var MenuView
+     */
     private $view;
 
     /**
-     * @var Registry\Models\ServiceModel $serviceModel
+     * @var ServiceModel $serviceModel
      */
     private $serviceModel;
 
@@ -40,7 +43,7 @@ class MasterController
             'q' => 'Exit application'
         );
 
-        $db = new PDO('sqlite:database/registry.sqlite');
+        $db = new PDO(DB_CONNECTION_STRING);
         $this->serviceModel = new ServiceModel($db);
 
         $this->view = new MenuView($this->options, "-----------\n Main menu \n-----------");
@@ -57,13 +60,15 @@ class MasterController
         }
     }
 
+    /**
+     * Dispatch the correct method based on chosen alternative
+     * @param  string $option letter option
+     */
     private function doAction($option)
     {
         switch ($option) {
             case 'l':
-                $memberModelArray = $this->serviceModel->getMembersWithBoats();
-                $compactMemberListView = new CompactMemberListView($memberModelArray);
-                $compactMemberListView->printMemberData();
+                $this->showCompactList();
                 break;
             case 'L':
                 $memberModelArray = $this->serviceModel->getMembersWithBoats();
@@ -81,7 +86,7 @@ class MasterController
                     $newMemberName = $registerMemberView->setMemberName();
                     if ($newMemberName == "") {
                         $noValidName = true;
-                        print "Name cannot be blank"; // TODO: should not be in controller...? 
+                        print "Name cannot be blank"; // TODO: should not be in controller...?
                     } else {
                         $noValidName = false;
                     }
@@ -92,7 +97,7 @@ class MasterController
                     $newMemberSSN = $registerMemberView->setMemberSSN($newMemberName);
                     if ($newMemberSSN == "") {
                         $noValidSSN = true;
-                        print "SSN cannot be blank"; // TODO: should not be in controller...? 
+                        print "SSN cannot be blank"; // TODO: should not be in controller...?
                     } else {
                         $noValidSSN = false;
                     }
@@ -102,8 +107,8 @@ class MasterController
                     $newMember = new MemberModel(null, $newMemberName, $newMemberSSN);
                     $this->serviceModel->addMember($newMember);
                 } catch (Exception $ex) {
-                    // You should normally never get to this catch as we have validated the user data in the do-while's above. 
-                    print ("Something went wrong: " . $ex->getMessage()); 
+                    // You should normally never get to this catch as we have validated the user data in the do-while's above.
+                    print ("Something went wrong: " . $ex->getMessage());
                 }
                 break;
             case 'e':
@@ -121,10 +126,10 @@ class MasterController
 
                 // Get the user you want to delete
                 $member = $selectMemberView->getSelectedMember();
-                
+
                 // do you realy want to delete this member
                 $confirm = $deleteMemberView->userWantsToDeleteMember($member);
-                
+
                 //Delete or spare the member
                 if($confirm) {
                     $this->serviceModel->removeMember($member);
@@ -149,5 +154,12 @@ class MasterController
                 exit(0);
                 break;
         }
+    }
+
+    private function showCompactList()
+    {
+        $memberModelArray = $this->serviceModel->getMembersWithBoats();
+        $compactMemberListView = new CompactMemberListView($memberModelArray);
+        $compactMemberListView->printMemberData();
     }
 }
