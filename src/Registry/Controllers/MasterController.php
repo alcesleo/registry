@@ -139,8 +139,8 @@ class MasterController
 
     private function deleteMember()
     {
-        $memberModelArray = $this->serviceModel->getMembers();
-        $selectMemberView = new SelectMemberView($memberModelArray);
+        $memberArray = $this->serviceModel->getMembers();
+        $selectMemberView = new SelectMemberView($memberArray);
         $deleteMemberView = new DeleteMemberView();
 
         // Get the user you want to delete
@@ -153,9 +153,9 @@ class MasterController
         // FIXME: Code duplication
         if ($confirm) {
             $this->serviceModel->removeMember($member);
-            $deleteMemberView->memberDeleted();
+            $deleteMemberView->showMemberDeleted();
         } else {
-            $deleteMemberView->memberNotDeleted();
+            $deleteMemberView->showMemberNotDeleted();
         }
     }
 
