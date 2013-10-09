@@ -6,27 +6,26 @@ use Registry\Views\MenuView;
 use Registry\Models\MemberModel;
 
 class RegisterMemberView extends CommandLineView
-{   
+{
 
     /**
      * @return string $input
-     * TODO: Felhantering i samtliga "set" metoder
+     * TODO: Felhantering i samtliga "get" metoder
      */
-    public function setMemberName()
+    public function getMemberName()
     {
         $input = $this->readLine("\n\nEnter members Name: ");
         return $input;
     }
-    
+
      /**
      * @param string $name
      * @return string $input
      */
-    public function setMemberSSN($name)
+    public function getMemberSSN($name)
     {
         $input = $this->readLine("\n\nEnter SSN for ".$name.": ");
-        
+
         return $input;
     }
 }
-    
