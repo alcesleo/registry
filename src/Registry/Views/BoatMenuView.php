@@ -30,8 +30,12 @@ class BoatMenuView
         $this->view = new MenuView($this->options, "-----------\n Boat menu \n-----------");
     }
     
-    public function showMenuOptions() 
+    /**
+     * @return string $input
+     */
+    public function getMenuOption() 
     {
         $input = $this->view->readMenuOption();
+        return $input;
     }
 }

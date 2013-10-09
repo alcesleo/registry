@@ -100,7 +100,19 @@ class AppController
     private function showBoatMenu() 
     {
         $boatMenuView = new BoatMenuView();
-        $boatMenuView->showMenuOptions();
+        $option = $boatMenuView->getMenuOption();
+        
+        switch ($option) {
+            case 'a':
+                echo "Add";
+                break;
+            case 'c':
+                echo "Change";
+                break;
+            case 'r':
+                echo "Remove";
+                break;
+        }
     }
 
     /**
