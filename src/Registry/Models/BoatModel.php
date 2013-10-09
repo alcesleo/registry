@@ -40,10 +40,12 @@ class BoatModel
      */
     public function setBoatID($boatID)
     {
-        if (! is_numeric($boatID)) {
+        // Accept null values in favor of autoincrement
+        if (is_numeric($boatID) || $boatID === null) {
+            $this->boatID = $boatID;
+        } else {
             throw new \Exception("BoatID must be numeric");
         }
-        $this->boatID = $boatID;
     }
 
     /**
