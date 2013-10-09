@@ -141,21 +141,31 @@ class MasterController
     {
         $memberArray = $this->serviceModel->getMembers();
         $selectMemberView = new SelectMemberView($memberArray);
-        $deleteMemberView = new DeleteMemberView();
-
         // Get the user you want to delete
         $member = $selectMemberView->getSelectedMember();
+        $this->deleteMemberWithConfirmation($member);
+    }
 
-        // do you realy want to delete this member
+    /**
+     * Delete a member if the user confirms
+     * @param  MemberModel $member to delete
+     * @return bool                true if member was deleted, false if not
+     */
+    private function deleteMemberWithConfirmation(MemberModel $member)
+    {
+        $deleteMemberView = new DeleteMemberView();
+
+        // do you realy want to delete this member?
         $confirm = $deleteMemberView->userWantsToDeleteMember($member);
 
         //Delete or spare the member
-        // FIXME: Code duplication
         if ($confirm) {
             $this->serviceModel->removeMember($member);
             $deleteMemberView->showMemberDeleted();
+            return true;
         } else {
             $deleteMemberView->showMemberNotDeleted();
+            return false;
         }
     }
 
@@ -163,23 +173,17 @@ class MasterController
     {
         $memberModelArray = $this->serviceModel->getMembers();
         $selectMemberView = new SelectMemberView($memberModelArray);
-        $deleteMemberView = new DeleteMemberView();
 
         // Get the user you want to delete
         $member = $selectMemberView->getSelectedMember();
 
-        // do you realy want to delete this member
-        $confirm = $deleteMemberView->userWantsToDeleteMember($member);
-
-        //Delete or spare the member
-        // FIXME: Code duplication
-        if ($confirm) {
-            $this->serviceModel->removeMember($member);
-            $deleteMemberView->memberDeleted();
-        } else {
-            $deleteMemberView->memberNotDeleted();
-        }
+        // TODO: Should we be able to do more stuff here?
+        $this->deleteMemberWithConfirmation($member);
     }
+
+    /**
+     * Exits the app
+     */
     private function quitApplication()
     {
         print 'Bye bye!'; // Should be in view
