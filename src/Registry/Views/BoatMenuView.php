@@ -2,6 +2,8 @@
 
 namespace Registry\Views;
 
+use Registry\Views\MenuView;
+
 use Exception;
 
 class BoatMenuView

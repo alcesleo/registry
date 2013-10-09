@@ -10,6 +10,7 @@ use Registry\Views\SingleMemberView;
 use Registry\Views\SelectMemberView;
 use Registry\Views\EditMemberView;
 use Registry\Views\DeleteMemberView;
+use Registry\Views\BoatMenuView;
 use Registry\Views\RegisterMemberView;
 use Registry\Models\MemberModel;
 use Registry\Models\ServiceModel;
@@ -87,7 +88,7 @@ class AppController
             case 's':
                 $this->selectMember();
                 break;
-            case 's':
+            case 'b':
                 $this->showBoatMenu();
                 break;
             case 'q':
@@ -98,7 +99,8 @@ class AppController
     
     private function showBoatMenu() 
     {
-        $boatMenuView = new BoatmenuView();
+        $boatMenuView = new BoatMenuView();
+        $boatMenuView->showMenuOptions();
     }
 
     /**
