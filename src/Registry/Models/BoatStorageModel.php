@@ -171,7 +171,7 @@ class BoatStorageModel
         // Bind values
         $stmt->bindValue(':ownerId', $ownerId, PDO::PARAM_INT); // TODO: This might crash?
         $stmt->bindValue(':boatId', $boat->getBoatID(), PDO::PARAM_INT);
-        $stmt->bindValue(':boatType', $boat->getBoatType(), PDO::PARAM_INT);
+        $stmt->bindValue(':boatType', $boat->getBoatType()->getTypeID(), PDO::PARAM_INT);
         $stmt->bindValue(':boatLength', $boat->getLength(), PDO::PARAM_STR); // There is no PARAM_FLOAT :(
 
         return $stmt->execute();
@@ -193,7 +193,7 @@ class BoatStorageModel
         $stmt = $this->pdo->prepare($sql);
 
         // Bind values
-        $stmt->bindValue(':boatType', $boat->getBoatType(), PDO::PARAM_INT);
+        $stmt->bindValue(':boatType', $boat->getBoatType()->getTypeID(), PDO::PARAM_INT);
         $stmt->bindValue(':boatLength', $boat->getLength(), PDO::PARAM_STR); // TODO: strval?
         $stmt->bindValue(':boatId', $boat->getBoatID(), PDO::PARAM_INT);
 
