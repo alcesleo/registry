@@ -109,7 +109,10 @@ class MasterController
         }
     }
 
-    // FIXME: Temporary function, might be moved
+    /**
+     * Create and save a new member
+     * @return bool if it was successful
+     */
     private function registerMember()
     {
         $registerMemberView = new RegisterMemberView();
@@ -125,9 +128,11 @@ class MasterController
         try {
             $newMember = new MemberModel(null, $newMemberName, $newMemberSSN);
             $this->serviceModel->addMember($newMember);
+            return true;
         } catch (Exception $ex) {
             // TODO: This should be in a view
             print ("Something went wrong: " . $ex->getMessage());
+            return false;
         }
     }
 
@@ -183,6 +188,9 @@ class MasterController
         }
     }
 
+    /**
+     * Select a member
+     */
     private function selectMember()
     {
         $memberModelArray = $this->serviceModel->getMembers();
