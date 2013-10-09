@@ -109,13 +109,13 @@ class AppController
     {
         switch ($option) {
             case 'a':
-                echo "Add";
+                echo "Add"; //TODO: complete this option
                 break;
             case 'c':
-                echo "Change";
+                echo "Change"; //TODO: complete this option
                 break;
             case 'r':
-                echo "Remove";
+                echo "Remove"; //TODO: complete this option
                 break;
         }
     }
