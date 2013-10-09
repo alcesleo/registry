@@ -2,6 +2,8 @@
 
 namespace Registry\Models;
 
+use Exception;
+
 class BoatTypeModel
 {
     const SAILBOAT = 1;
@@ -30,7 +32,7 @@ class BoatTypeModel
     /**
      * @return BoatTypeModel
      */
-    public static function sailBoat()
+    public static function SailBoat()
     {
         return new BoatTypeModel(BoatTypeModel::SAILBOAT);
     }
@@ -38,7 +40,7 @@ class BoatTypeModel
     /**
      * @return BoatTypeModel
      */
-    public static function motorBoat()
+    public static function MotorBoat()
     {
         return new BoatTypeModel(BoatTypeModel::MOTORBOAT);
     }
@@ -46,7 +48,7 @@ class BoatTypeModel
     /**
      * @return BoatTypeModel
      */
-    public static function motorSailBoat()
+    public static function MotorSailBoat()
     {
         return new BoatTypeModel(BoatTypeModel::MOTORSAILBOAT);
     }
@@ -54,7 +56,7 @@ class BoatTypeModel
     /**
      * @return BoatTypeModel
      */
-    public static function canoe()
+    public static function Canoe()
     {
         return new BoatTypeModel(BoatTypeModel::CANOE);
     }
@@ -62,7 +64,7 @@ class BoatTypeModel
     /**
      * @return BoatTypeModel
      */
-    public static function other()
+    public static function Other()
     {
         return new BoatTypeModel(BoatTypeModel::OTHER);
     }
@@ -70,8 +72,11 @@ class BoatTypeModel
     /**
      * @param int $boatTypeId one of the constants
      */
-    private function __construct($boatTypeId)
+    public function __construct($boatTypeId)
     {
+        if (! array_key_exists($boatTypeId, self::$strings)) {
+            throw new Exception("BoatType with ID $boatTypeId does not exist");
+        }
         $this->boatTypeId = $boatTypeId;
     }
 
