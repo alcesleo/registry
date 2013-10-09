@@ -6,7 +6,7 @@
 2. Ta bort en båt
 3. Ändra en båt
 4. Felhantering (när inga medlemmar finns, inga båtar finns, etc)
-5. Körinstruktioner
+5. Körinstruktioner **DONE**
 6. Klassdiagram
 7. Sekvensdiagram
 
