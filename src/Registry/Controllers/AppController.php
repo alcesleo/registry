@@ -98,7 +98,7 @@ class AppController
     
     private function showBoatMenu() 
     {
-        //Code here
+        $boatMenuView = new BoatmenuView();
     }
 
     /**
