@@ -25,7 +25,7 @@ class BoatTypeModel
     /**
      * @var int
      */
-    private $boatType;
+    private $boatTypeId;
 
     /**
      * @return BoatTypeModel
@@ -70,9 +70,18 @@ class BoatTypeModel
     /**
      * @param int $boatTypeId one of the constants
      */
-    private function __construct($boatType)
+    private function __construct($boatTypeId)
     {
-        $this->boatType = $boatType;
+        $this->boatTypeId = $boatTypeId;
+    }
+
+    /**
+     * Get the number representation of the boat-type
+     * @return int
+     */
+    public function getTypeID()
+    {
+        return $this->boatTypeId;
     }
 
     /**
