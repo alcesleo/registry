@@ -69,10 +69,10 @@ class MasterController
     {
         switch ($option) {
             case 'l':
-                $this->showCompactList();
+                $this->showMemberList();
                 break;
             case 'L':
-                $this->showLongList();
+                $this->showMemberList(true);
                 break;
             case 'r':
                 $this->registerMember();
@@ -92,18 +92,21 @@ class MasterController
         }
     }
 
-    private function showCompactList()
+    /**
+     * Show a list of the members
+     * @param  boolean $long long/short format
+     */
+    private function showMemberList($long = false)
     {
         $memberModelArray = $this->serviceModel->getMembersWithBoats();
-        $compactMemberListView = new CompactMemberListView($memberModelArray);
-        $compactMemberListView->printMemberData();
-    }
 
-    private function showLongList()
-    {
-        $memberModelArray = $this->serviceModel->getMembersWithBoats();
-        $fullMemberListView = new FullMemberListView($memberModelArray);
-        $fullMemberListView->printFullMemberList();
+        if ($long) {
+            $fullMemberListView = new FullMemberListView($memberModelArray);
+            $fullMemberListView->printFullMemberList();
+        } else {
+            $compactMemberListView = new CompactMemberListView($memberModelArray);
+            $compactMemberListView->printMemberData();
+        }
     }
 
     // FIXME: Temporary function, might be moved
@@ -123,10 +126,14 @@ class MasterController
             $newMember = new MemberModel(null, $newMemberName, $newMemberSSN);
             $this->serviceModel->addMember($newMember);
         } catch (Exception $ex) {
+            // TODO: This should be in a view
             print ("Something went wrong: " . $ex->getMessage());
         }
     }
 
+    /**
+     * Edit properties of a member
+     */
     private function editMember()
     {
         $memberArray = $this->serviceModel->getMembers();
@@ -137,13 +144,20 @@ class MasterController
         $this->serviceModel->changeMember($altMember);
     }
 
+    /**
+     * Delete a member from a list of all members
+     * @return bool if someone was deleted
+     */
     private function deleteMember()
     {
+        // Show list of members
         $memberArray = $this->serviceModel->getMembers();
         $selectMemberView = new SelectMemberView($memberArray);
+
         // Get the user you want to delete
         $member = $selectMemberView->getSelectedMember();
-        $this->deleteMemberWithConfirmation($member);
+
+        return $this->deleteMemberWithConfirmation($member);
     }
 
     /**
