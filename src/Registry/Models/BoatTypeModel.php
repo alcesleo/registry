@@ -29,6 +29,17 @@ class BoatTypeModel
      */
     private $boatTypeId;
 
+
+    /**
+     * @return Array $options
+     */
+    public static function getTypes()
+    {
+        $options = $this->strings;
+        return $options;
+    }
+    
+    
     /**
      * @return BoatTypeModel
      */
