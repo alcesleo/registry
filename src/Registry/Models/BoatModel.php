@@ -2,6 +2,8 @@
 
 namespace Registry\Models;
 
+use Exception;
+
 class BoatModel
 {
     /**

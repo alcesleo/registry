@@ -12,7 +12,11 @@ use Registry\Views\EditMemberView;
 use Registry\Views\DeleteMemberView;
 use Registry\Views\BoatMenuView;
 use Registry\Views\RegisterMemberView;
+use Registry\Views\RegisterBoatView;
+use Registry\Views\SelectBoatView;
+use Registry\Views\EditBoatView;
 use Registry\Models\MemberModel;
+use Registry\Models\BoatModel;
 use Registry\Models\ServiceModel;
 use PDO;
 use Exception;
@@ -89,7 +93,7 @@ class AppController
                 $this->selectMember();
                 break;
             case 'b':
-                $this->showBoatMenu();
+                $this->handleBoats();
                 break;
             case 'q':
                 $this->quitApplication();
@@ -97,25 +101,29 @@ class AppController
         }
     }
     
-    private function showBoatMenu() 
+    private function showBoatMenu(MemberModel $member) 
     {
-        $boatMenuView = new BoatMenuView();
+        $showFullMenu = false;
+        if (count($member->getOwnedBoats())>0) {
+            $showFullMenu = true;
+        }
+        $boatMenuView = new BoatMenuView($showFullMenu);
         $option = $boatMenuView->getMenuOption();
         
-        $this->doBoatAction($option);
+        $this->doBoatAction($option, $member);
     }
     
-    private function doBoatAction($option)
+    private function doBoatAction($option, MemberModel $member)
     {
         switch ($option) {
-            case 'a':
-                echo "Add"; //TODO: complete this option
-                break;
-            case 'c':
-                echo "Change"; //TODO: complete this option
-                break;
             case 'r':
-                echo "Remove"; //TODO: complete this option
+                $this->registerBoat($member);
+                break;
+            case 'e':
+                $this->editBoat($member);
+                break;
+            case 'd':
+                echo "Delete"; //TODO: complete this option
                 break;
         }
     }
@@ -229,6 +237,49 @@ class AppController
 
         // TODO: Should we be able to do more stuff here?
         $this->deleteMemberWithConfirmation($member);
+    }
+
+        /**
+     * Edit properties of a boat
+     */
+    private function editBoat(MemberModel $member)
+    {
+        $boatArray = $this->serviceModel->getBoats($member);
+        $SelectBoatView = new SelectBoatView($boatArray);
+        $editBoatView = new EditBoatView();
+        $boat = $SelectBoatView->getSelectedBoat();
+        $changedBoat = $editBoatView->changeBoatData($boat);
+        $this->serviceModel->changeBoat($changedBoat);
+    }
+
+    /**
+     * Create and save a new boat on a member
+     * @return bool if it was successful
+     */
+    private function registerBoat(MemberModel $member)
+    {
+        $registerBoatView = new RegisterBoatView();
+        $newBoatType = $registerBoatView->getBoatType(); // TODO: FIX THE HARDCODING
+        $newBoatLength = $registerBoatView->getBoatLength();
+
+        // Create and save the boat
+        try {
+            $newBoat = new BoatModel(null, $newBoatType, $newBoatLength);
+            $this->serviceModel->addBoat($newBoat, $member);
+            return true;
+        } catch (Exception $ex) {
+            print ("Something went wrong: " . $ex->getMessage());
+            return false;
+        }
+    }
+
+    private function handleBoats() 
+    {
+        $memberArray = $this->serviceModel->getMembersWithBoats();
+        $selectMemberView = new SelectMemberView($memberArray);
+        $member = $selectMemberView->getSelectedMember("Select user to handle boats for");
+
+        $this->showBoatMenu($member);
     }
 
     /**

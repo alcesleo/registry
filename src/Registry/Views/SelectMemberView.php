@@ -23,7 +23,7 @@ class SelectMemberView
     /**
      * @return memberModel $member
      */
-    public function getSelectedMember()
+    public function getSelectedMember($prompt = "Please select user: ")
     {
         //Sets array for menu
         $menuArray = array();
@@ -35,7 +35,7 @@ class SelectMemberView
         $menu = new MenuView($menuArray);
 
         //Print menu and get selected member-object
-        $member = $this->memberModelArray[$menu->readMenuOption("Please select user: ")];
+        $member = $this->memberModelArray[$menu->readMenuOption($prompt)];
 
         return $member;
     }

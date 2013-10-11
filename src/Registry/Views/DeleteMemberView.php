@@ -24,7 +24,7 @@ class DeleteMemberView extends CommandLineView
             }
         }
 
-        return ($input == 'y');
+        return (strtolower($input) == 'y');
     }
 
     /**

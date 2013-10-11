@@ -19,13 +19,19 @@ class BoatMenuView
     private $options;
 
 
-    public function __construct()
+    public function __construct($showFullMenu)
     {
-        $this->options = array(
-            'a' => 'Add boat',
-            'c' => 'Change boat',
-            'r' => 'Remove boat'
-        );
+        if ($showFullMenu) {
+            $this->options = array(
+                'r' => 'Register boat',
+                'e' => 'Edit boat',
+                'd' => 'Delete boat'
+            );
+        } else {
+            $this->options = array(
+                'r' => 'Register boat',
+            ); 
+        }
 
         $this->view = new MenuView($this->options, "-----------\n Boat menu \n-----------");
     }
