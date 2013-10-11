@@ -8,12 +8,12 @@ use Registry\Models\BoatModel;
 class SelectBoatView
 {
     /**
-     * @var Array of BoatModel $boatMemberArray
+     * @var Array of BoatModel $boatModelArray
      */
     private $boatModelArray;
 
     /**
-     * @param array of BoatModel $boatMemberArray (with boats)
+     * @param array of BoatModel $boatModelArray (with boats)
      */
     public function __construct($boatModelArray)
     {

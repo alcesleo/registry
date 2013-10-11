@@ -244,6 +244,7 @@ class AppController
      */
     private function editBoat(MemberModel $member)
     {
+        // TODO: exception handling
         $boatArray = $this->serviceModel->getBoats($member);
         $SelectBoatView = new SelectBoatView($boatArray);
         $editBoatView = new EditBoatView();
