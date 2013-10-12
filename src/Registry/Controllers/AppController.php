@@ -2,17 +2,13 @@
 
 namespace Registry\Controllers;
 
+use Registry\Controllers\MemberController;
 use Registry\Views\MenuView;
-
 use Registry\Views\CompactMemberListView;
 use Registry\Views\FullMemberListView;
-use Registry\Views\SingleMemberView;
 use Registry\Views\SelectMemberView;
-use Registry\Views\EditMemberView;
-use Registry\Views\DeleteMemberView;
 use Registry\Views\DeleteBoatView;
 use Registry\Views\BoatMenuView;
-use Registry\Views\RegisterMemberView;
 use Registry\Views\RegisterBoatView;
 use Registry\Views\SelectBoatView;
 use Registry\Views\EditBoatView;
@@ -37,6 +33,11 @@ class AppController
      */
     private $serviceModel;
 
+    /**
+     * @var MemberController $memberController
+     */
+    private $memberController;
+
     public function __construct()
     {
         // TODO: Break out to view
@@ -53,6 +54,8 @@ class AppController
 
         $db = new PDO(DB_CONNECTION_STRING);
         $this->serviceModel = new ServiceModel($db);
+
+        $this->memberController = new MemberController($this->serviceModel);
 
         $this->view = new MenuView($this->options, "-----------\n Main menu \n-----------");
     }
@@ -82,16 +85,16 @@ class AppController
                 $this->showMemberList(true);
                 break;
             case 'r':
-                $this->registerMember();
+                $this->memberController->registerMember();
                 break;
             case 'e':
-                $this->editMember();
+                $this->memberController->editMember();
                 break;
             case 'd':
-                $this->deleteMember();
+                $this->memberController->deleteMember();
                 break;
             case 's':
-                $this->selectMember();
+                $this->memberController->selectSingleMember();
                 break;
             case 'b':
                 $this->handleBoats();
@@ -151,101 +154,6 @@ class AppController
     }
 
     /**
-     * Create and save a new member
-     * @return bool if it was successful
-     */
-    private function registerMember()
-    {
-        $registerMemberView = new RegisterMemberView();
-
-        // Get member name
-        $newMemberName = $registerMemberView->getMemberName();
-
-        // Get social security number
-        // TODO: SSN should have more validation!
-        $newMemberSSN = $registerMemberView->getMemberSSN($newMemberName);
-
-        // Create and save the member
-        try {
-            $newMember = new MemberModel(null, $newMemberName, $newMemberSSN);
-            $this->serviceModel->addMember($newMember);
-            return true;
-        } catch (Exception $ex) {
-            // TODO: This should be in a view
-            print ("Something went wrong: " . $ex->getMessage());
-            return false;
-        }
-    }
-
-    /**
-     * Edit properties of a member
-     */
-    private function editMember()
-    {
-        $editMemberView = new EditMemberView();
-        try {
-            $memberArray = $this->serviceModel->getMembers();
-            $selectMemberView = new SelectMemberView($memberArray);
-            $member = $selectMemberView->getSelectedMember();
-
-            $altMember = $editMemberView->changeMemberData($member);
-            $this->serviceModel->changeMember($altMember);
-        } catch (Exception $ex){
-            print("Something went wrong. " . $ex->getMessage());
-        }
-    }
-
-    /**
-     * Delete a member from a list of all members
-     */
-    private function deleteMember()
-    {
-        // Show list of members
-        $memberArray = $this->serviceModel->getMembers();
-        $selectMemberView = new SelectMemberView($memberArray);
-
-        // Get the user you want to delete
-        $member = $selectMemberView->getSelectedMember();
-
-        $this->deleteMemberWithConfirmation($member);
-    }
-
-    /**
-     * Delete a member if the user confirms
-     * @param  MemberModel $member to delete
-     */
-    private function deleteMemberWithConfirmation(MemberModel $member)
-    {
-        $deleteMemberView = new DeleteMemberView();
-
-        // do you realy want to delete this member?
-        $confirm = $deleteMemberView->userWantsToDeleteMember($member);
-
-        //Delete or spare the member
-        if ($confirm) {
-            $this->serviceModel->removeMember($member);
-            $deleteMemberView->showMemberDeleted();
-        } else {
-            $deleteMemberView->showMemberNotDeleted();
-        }
-    }
-
-    /**
-     * Select a member
-     */
-    private function selectMember()
-    {
-        $memberModelArray = $this->serviceModel->getMembers();
-        $selectMemberView = new SelectMemberView($memberModelArray);
-
-        // Get the user you want to delete
-        $member = $selectMemberView->getSelectedMember();
-
-        // TODO: Should we be able to do more stuff here?
-        $this->deleteMemberWithConfirmation($member);
-    }
-
-        /**
      * Edit properties of a boat
      */
     private function editBoat(MemberModel $member)
@@ -295,7 +203,7 @@ class AppController
     /**
      * @param MemberModel $member
      */
-    private function deleteBoat($member)
+    private function deleteBoat(MemberModel $member)
     {
         // Show list of boats for current member
         $boatArray = $this->serviceModel->getBoats($member);
