@@ -135,14 +135,18 @@ class AppController
      */
     private function showMemberList($long = false)
     {
-        $memberModelArray = $this->serviceModel->getMembersWithBoats();
+        try {
+            $memberModelArray = $this->serviceModel->getMembersWithBoats();
 
-        if ($long) {
-            $fullMemberListView = new FullMemberListView($memberModelArray);
-            $fullMemberListView->printFullMemberList();
-        } else {
-            $compactMemberListView = new CompactMemberListView($memberModelArray);
-            $compactMemberListView->printMemberData();
+            if ($long) {
+                $fullMemberListView = new FullMemberListView($memberModelArray);
+                $fullMemberListView->printFullMemberList();
+            } else {
+                $compactMemberListView = new CompactMemberListView($memberModelArray);
+                $compactMemberListView->printMemberData();
+            }
+        } catch (Exception $ex){
+            print("Something went wrong. " . $ex->getMessage());
         }
     }
 
@@ -178,17 +182,21 @@ class AppController
      */
     private function editMember()
     {
-        $memberArray = $this->serviceModel->getMembers();
-        $selectMemberView = new SelectMemberView($memberArray);
         $editMemberView = new EditMemberView();
-        $member = $selectMemberView->getSelectedMember();
-        $altMember = $editMemberView->changeMemberData($member);
-        $this->serviceModel->changeMember($altMember);
+        try {
+            $memberArray = $this->serviceModel->getMembers();
+            $selectMemberView = new SelectMemberView($memberArray);
+            $member = $selectMemberView->getSelectedMember();
+
+            $altMember = $editMemberView->changeMemberData($member);
+            $this->serviceModel->changeMember($altMember);
+        } catch (Exception $ex){
+            print("Something went wrong. " . $ex->getMessage());
+        }
     }
 
     /**
      * Delete a member from a list of all members
-     * @return bool if someone was deleted
      */
     private function deleteMember()
     {
@@ -199,13 +207,12 @@ class AppController
         // Get the user you want to delete
         $member = $selectMemberView->getSelectedMember();
 
-        return $this->deleteMemberWithConfirmation($member);
+        $this->deleteMemberWithConfirmation($member);
     }
 
     /**
      * Delete a member if the user confirms
      * @param  MemberModel $member to delete
-     * @return bool                true if member was deleted, false if not
      */
     private function deleteMemberWithConfirmation(MemberModel $member)
     {
@@ -218,10 +225,8 @@ class AppController
         if ($confirm) {
             $this->serviceModel->removeMember($member);
             $deleteMemberView->showMemberDeleted();
-            return true;
         } else {
             $deleteMemberView->showMemberNotDeleted();
-            return false;
         }
     }
 
@@ -286,7 +291,6 @@ class AppController
 
     /**
      * @param MemberModel $member
-     * @return bool if a boat was deleted
      */
     private function deleteBoat($member)
     {
@@ -297,29 +301,26 @@ class AppController
         // Get the boat you want to delete
         $boat = $selectBoatView->getSelectedBoat();
 
-        return $this->deleteBoatWithConfirmation($boat);
+        $this->deleteBoatWithConfirmation($boat);
     }
 
     /**
      * Delete a boat if the user confirms
      * @param  BoatModel $boat to delete
-     * @return bool true if boat was deleted, false if not
      */
     private function deleteBoatWithConfirmation(BoatModel $boat)
     {
         $deleteBoatView = new DeleteBoatView();
 
-        // do you realy want to delete this member?
+        // do you realy want to delete this boat?
         $confirm = $deleteBoatView->userWantsToDeleteBoat($boat);
 
-        //Delete or spare the member
+        //Delete or spare the boat
         if ($confirm) {
             $this->serviceModel->removeBoat($boat);
             $deleteBoatView->showBoatDeleted();
-            return true;
         } else {
             $deleteBoatView->showBoatNotDeleted();
-            return false;
         }
     }
 
