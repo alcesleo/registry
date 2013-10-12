@@ -4,7 +4,8 @@ namespace Registry\Controllers;
 
 use Registry\Models\ServiceModel;
 use Registry\Models\MemberModel;
-
+use Registry\Views\CompactMemberListView;
+use Registry\Views\FullMemberListView;
 use Registry\Views\SelectMemberView;
 use Registry\Views\RegisterMemberView;
 use Registry\Views\EditMemberView;
@@ -101,5 +102,26 @@ class MemberController
         
         $singleMemberView = new SingleMemberView();
         $singleMemberView->printMemberData($member);
+    }
+
+    /**
+     * Show a list of the members
+     * @param  boolean $long long/short format
+     */
+    public function showMemberList($long = false)
+    {
+        try {
+            $memberModelArray = $this->serviceModel->getMembersWithBoats();
+
+            if ($long) {
+                $fullMemberListView = new FullMemberListView($memberModelArray);
+                $fullMemberListView->printFullMemberList();
+            } else {
+                $compactMemberListView = new CompactMemberListView($memberModelArray);
+                $compactMemberListView->printMemberData();
+            }
+        } catch (Exception $ex){
+            print("Something went wrong. " . $ex->getMessage());
+        }
     }
 }

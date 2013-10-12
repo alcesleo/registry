@@ -4,8 +4,6 @@ namespace Registry\Controllers;
 
 use Registry\Controllers\MemberController;
 use Registry\Views\MenuView;
-use Registry\Views\CompactMemberListView;
-use Registry\Views\FullMemberListView;
 use Registry\Views\SelectMemberView;
 use Registry\Views\DeleteBoatView;
 use Registry\Views\BoatMenuView;
@@ -79,10 +77,10 @@ class AppController
     {
         switch ($option) {
             case 'l':
-                $this->showMemberList();
+                $this->memberController->showMemberList();
                 break;
             case 'L':
-                $this->showMemberList(true);
+                $this->memberController->showMemberList(true);
                 break;
             case 'r':
                 $this->memberController->registerMember();
@@ -129,27 +127,6 @@ class AppController
             case 'd':
                 $this->deleteBoat($member);
                 break;
-        }
-    }
-
-    /**
-     * Show a list of the members
-     * @param  boolean $long long/short format
-     */
-    private function showMemberList($long = false)
-    {
-        try {
-            $memberModelArray = $this->serviceModel->getMembersWithBoats();
-
-            if ($long) {
-                $fullMemberListView = new FullMemberListView($memberModelArray);
-                $fullMemberListView->printFullMemberList();
-            } else {
-                $compactMemberListView = new CompactMemberListView($memberModelArray);
-                $compactMemberListView->printMemberData();
-            }
-        } catch (Exception $ex){
-            print("Something went wrong. " . $ex->getMessage());
         }
     }
 
