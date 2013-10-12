@@ -10,6 +10,7 @@ use Registry\Views\SingleMemberView;
 use Registry\Views\SelectMemberView;
 use Registry\Views\EditMemberView;
 use Registry\Views\DeleteMemberView;
+use Registry\Views\DeleteBoatView;
 use Registry\Views\BoatMenuView;
 use Registry\Views\RegisterMemberView;
 use Registry\Views\RegisterBoatView;
@@ -123,7 +124,7 @@ class AppController
                 $this->editBoat($member);
                 break;
             case 'd':
-                echo "Delete"; //TODO: complete this option
+                $this->deleteBoat($member);
                 break;
         }
     }
@@ -281,6 +282,45 @@ class AppController
         $member = $selectMemberView->getSelectedMember("Select user to handle boats for");
 
         $this->showBoatMenu($member);
+    }
+
+    /**
+     * @param MemberModel $member
+     * @return bool if a boat was deleted
+     */
+    private function deleteBoat($member)
+    {
+        // Show list of boats for current member
+        $boatArray = $this->serviceModel->getBoats($member);
+        $selectBoatView = new SelectBoatView($boatArray);
+
+        // Get the boat you want to delete
+        $boat = $selectBoatView->getSelectedBoat();
+
+        return $this->deleteBoatWithConfirmation($boat);
+    }
+
+    /**
+     * Delete a boat if the user confirms
+     * @param  BoatModel $boat to delete
+     * @return bool true if boat was deleted, false if not
+     */
+    private function deleteBoatWithConfirmation(BoatModel $boat)
+    {
+        $deleteBoatView = new DeleteBoatView();
+
+        // do you realy want to delete this member?
+        $confirm = $deleteBoatView->userWantsToDeleteBoat($boat);
+
+        //Delete or spare the member
+        if ($confirm) {
+            $this->serviceModel->removeBoat($boat);
+            $deleteBoatView->showBoatDeleted();
+            return true;
+        } else {
+            $deleteBoatView->showBoatNotDeleted();
+            return false;
+        }
     }
 
     /**
