@@ -2,6 +2,8 @@
 
 namespace Registry\Views;
 
+use Registry\Views\BoatTypeMenuView;
+
 class RegisterBoatView extends CommandLineView
 {
 
@@ -23,16 +25,8 @@ class RegisterBoatView extends CommandLineView
 
     public function getBoatType() 
     {
-        // TODO: Prob change to an own menu view?
-        while (true) {
-            $input = $this->readLine("\nAvailable boat types:\n1 Sailboat\n2 Motorboat\n3 Motorsailboat\n4 Canoe\n5 Other\n\nSelect boat type\n");
-            //TODO validation
-            if ($input == "") {
-                print "You must select boat type";
-            } else {
-                return intval($input);
-            }
-        }
-
+        $boatTypeMenuView = new BoatTypeMenuView();
+        $boatType = $boatTypeMenuView->getMenuOption();
+        return intval($boatType);
     }
 }

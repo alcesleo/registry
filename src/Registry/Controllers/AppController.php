@@ -282,11 +282,14 @@ class AppController
 
     private function handleBoats() 
     {
-        $memberArray = $this->serviceModel->getMembersWithBoats();
-        $selectMemberView = new SelectMemberView($memberArray);
-        $member = $selectMemberView->getSelectedMember("Select user to handle boats for");
-
-        $this->showBoatMenu($member);
+        try {
+            $memberArray = $this->serviceModel->getMembersWithBoats();
+            $selectMemberView = new SelectMemberView($memberArray);
+            $member = $selectMemberView->getSelectedMember("Select user to handle boats for");
+            $this->showBoatMenu($member);
+        } catch (Exception $ex) {
+            print ("Something went wrong. " . $ex->getMessage());
+        }
     }
 
     /**

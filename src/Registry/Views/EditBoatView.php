@@ -4,6 +4,7 @@ namespace Registry\Views;
 
 use Registry\Views\MenuView;
 use Registry\Models\BoatModel;
+use Registry\Views\BoatTypeMenuView;
 
 class EditBoatView extends CommandLineView
 {
@@ -40,10 +41,9 @@ class EditBoatView extends CommandLineView
         
         if ($action == 't')
         {
-            // TODO: Add boat type alternatives (should it be a view in itself?)
-            // also, no validation!
-            $input = $this->readLine("Enter new boat type: ");
-            $boat->setBoatTypeByID(intval($input));
+            $boatTypeMenuView = new BoatTypeMenuView();
+            $newBoatType = $boatTypeMenuView->getMenuOption("Select new boat type: ");
+            $boat->setBoatTypeByID(intval($newBoatType));
             echo "\n\n Boat type has been changed!\n\n";
         }
         

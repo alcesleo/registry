@@ -35,7 +35,7 @@ class BoatTypeModel
      */
     public static function getTypes()
     {
-        $options = $this->strings;
+        $options = self::$strings;
         return $options;
     }
     
