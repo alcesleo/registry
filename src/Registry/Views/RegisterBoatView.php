@@ -2,7 +2,8 @@
 
 namespace Registry\Views;
 
-use Registry\Views\BoatTypeMenuView;
+use Registry\Views\MenuView;
+use Registry\Models\BoatTypeModel;
 
 class RegisterBoatView extends CommandLineView
 {
@@ -25,8 +26,8 @@ class RegisterBoatView extends CommandLineView
 
     public function getBoatType() 
     {
-        $boatTypeMenuView = new BoatTypeMenuView();
-        $boatType = $boatTypeMenuView->getMenuOption();
+        $boatTypeMenuView = new MenuView(BoatTypeModel::getTypes());
+        $boatType = $boatTypeMenuView->readMenuOption();
         return intval($boatType);
     }
 }

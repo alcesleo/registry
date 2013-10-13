@@ -4,6 +4,7 @@ namespace Registry\Views;
 
 use Registry\Views\MenuView;
 use Registry\Models\BoatModel;
+use Registry\Models\BoatTypeModel;
 use Registry\Views\BoatTypeMenuView;
 
 class EditBoatView extends CommandLineView
@@ -41,8 +42,8 @@ class EditBoatView extends CommandLineView
         
         if ($action == 't')
         {
-            $boatTypeMenuView = new BoatTypeMenuView();
-            $newBoatType = $boatTypeMenuView->getMenuOption("Select new boat type: ");
+            $boatTypeMenuView = new MenuView(BoatTypeModel::getTypes());
+            $newBoatType = $boatTypeMenuView->readMenuOption("Select new boat type: ");
             $boat->setBoatTypeByID(intval($newBoatType));
             echo "\n\n Boat type has been changed!\n\n";
         }
