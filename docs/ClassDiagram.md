@@ -1,3 +1,9 @@
 # Class Diagram
 
-![](http://yuml.me/b7aa3b08)
+## Colors
+
+Controllers: Orange
+Views: Yellow
+Models: Blue
+
+![](http://yuml.me/4ced74aa)
