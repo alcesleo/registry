@@ -15,7 +15,7 @@ class AppController
     private $options;
 
     /**
-     * @var MenuView
+     * @var MenuView $view
      */
     private $view;
 
@@ -107,7 +107,7 @@ class AppController
      */
     private function quitApplication()
     {
-        print 'Bye bye!'; // Should be in view
+        print 'Bye bye!'; // TODO: Should be in view
         exit(0);
     }
 }

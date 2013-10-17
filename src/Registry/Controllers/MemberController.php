@@ -14,11 +14,16 @@ use Registry\Views\SingleMemberView;
 
 use Exception;
 
-// TODO fix comments and standard
 class MemberController 
 {
+    /**
+     * @var ServiceModel $serviceModel
+     */
     private $serviceModel;
 
+    /**
+     * @param ServiceModel $serviceModel 
+     */
     public function __construct(ServiceModel $serviceModel) 
     {
         $this->serviceModel = $serviceModel;
@@ -39,7 +44,7 @@ class MemberController
             $newMember = new MemberModel(null, $newMemberName, $newMemberSSN);
             $this->serviceModel->addMember($newMember);
         } catch (Exception $ex) {
-            print ("Something went wrong: " . $ex->getMessage());
+            print ("Something went wrong: " . $ex->getMessage()); // TODO: should be in a view
         }
     }
 
@@ -54,7 +59,7 @@ class MemberController
             $changedMember = $editMemberView->changeMemberData($member);
             $this->serviceModel->changeMember($changedMember);
         } catch (Exception $ex){
-            print("Something went wrong. " . $ex->getMessage());
+            print("Something went wrong. " . $ex->getMessage()); // TODO: should be in a view
         }
     }
 
@@ -121,7 +126,7 @@ class MemberController
                 $compactMemberListView->printMemberData();
             }
         } catch (Exception $ex){
-            print("Something went wrong. " . $ex->getMessage());
+            print("Something went wrong. " . $ex->getMessage()); // TODO: should be in a view
         }
     }
 }

@@ -14,9 +14,11 @@ use Registry\Views\EditBoatView;
 
 use Exception;
 
-// TODO fix comments and standard
 class BoatController 
 {
+    /**
+     * @var ServiceModel $serviceModel
+     */
     private $serviceModel;
 
     public function __construct(ServiceModel $serviceModel) 
@@ -28,6 +30,7 @@ class BoatController
     private function showBoatMenu(MemberModel $member) 
     {
         // If the selected member has boats, show edit and delete. 
+        // TODO: Should be in a view
         if (count($member->getOwnedBoats())>0) {
             $options = array(
                 'r' => 'Register boat',
@@ -46,6 +49,11 @@ class BoatController
         $this->doBoatAction($option, $member);
     }
     
+    /**
+     * Dispatch the correct method based on chosen alternative
+     * @param string $option 
+     * @param MemberModel $member
+     */
     private function doBoatAction($option, MemberModel $member)
     {
         switch ($option) {
@@ -63,39 +71,44 @@ class BoatController
 
     /**
      * Edit properties of a boat
+     * @param MemberModel $member
      */
     private function editBoat(MemberModel $member)
     {
-        // TODO: exception handling
-        $boatArray = $this->serviceModel->getBoats($member);
-        $SelectBoatView = new SelectBoatView($boatArray);
-        $editBoatView = new EditBoatView();
-        $boat = $SelectBoatView->getSelectedBoat();
-        $changedBoat = $editBoatView->changeBoatData($boat);
-        $this->serviceModel->changeBoat($changedBoat);
+        try {
+            $boatArray = $this->serviceModel->getBoats($member);
+            $SelectBoatView = new SelectBoatView($boatArray);
+            $editBoatView = new EditBoatView();
+            $boat = $SelectBoatView->getSelectedBoat();
+            $changedBoat = $editBoatView->changeBoatData($boat);
+            $this->serviceModel->changeBoat($changedBoat);
+        } catch (Exception $ex) {
+            print("Something went wrong. " . $ex->getMessage()); // TODO: should be in a view
+        }
     }
 
     /**
      * Create and save a new boat on a member
-     * @return bool if it was successful
+     * @param MemberModel $member
      */
     private function registerBoat(MemberModel $member)
     {
         $registerBoatView = new RegisterBoatView();
-        $newBoatType = $registerBoatView->getBoatType(); // TODO: FIX THE HARDCODING
+        $newBoatType = $registerBoatView->getBoatType();
         $newBoatLength = $registerBoatView->getBoatLength();
 
         // Create and save the boat
         try {
             $newBoat = new BoatModel(null, $newBoatType, $newBoatLength);
             $this->serviceModel->addBoat($newBoat, $member);
-            return true;
         } catch (Exception $ex) {
-            print ("Something went wrong: " . $ex->getMessage());
-            return false;
+            print ("Something went wrong: " . $ex->getMessage()); // TODO: should be in a view
         }
     }
 
+    /**
+     * Presents the user with a list of members for selection
+     */
     public function handleBoats() 
     {
         try {
@@ -104,7 +117,7 @@ class BoatController
             $member = $selectMemberView->getSelectedMember("Select user to handle boats for");
             $this->showBoatMenu($member);
         } catch (Exception $ex) {
-            print ("Something went wrong. " . $ex->getMessage());
+            print ("Something went wrong. " . $ex->getMessage()); // TODO: should be in a view
         }
     }
 
