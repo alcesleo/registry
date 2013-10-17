@@ -2,6 +2,7 @@
 
 namespace Registry\Models;
 
+use Registry\Models\BoatTypeModel;
 use Exception;
 
 class BoatModel
