@@ -3,6 +3,7 @@
 namespace Registry\Views;
 
 use Registry\Models\MemberModel;
+use Registry\Models\BoatModel;
 
 class FullMemberListView
 {
